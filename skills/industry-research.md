@@ -1,13 +1,13 @@
-# 行业投资研究：产业链全景扫描 + 四大师个股分析框架
+# 行业投资研究：美股产业链全景扫描 + 四大师个股分析框架
 
-对 $ARGUMENTS 行业进行系统化产业链投资研究。
+对 $ARGUMENTS 行业进行系统化产业链投资研究。默认市场为美股（NYSE / NASDAQ / NYSE American），ADR 只有在行业相关且用户明确需要时纳入。
 
 ## 研究目标
 
 从一个投资主题/逻辑链出发，完成：
 1. 验证投资逻辑链的每一个环节
 2. 绘制完整产业链全景图
-3. 扫描全球所有上市公司（A股/港股/美股/国际）
+3. 默认扫描美股主要上市公司、相关 ADR、sector/thematic ETF holdings、10-K 中提及的竞争对手和关键未上市公司
 4. 对每个细分环节的头部公司执行四大师框架分析
 5. 输出行业级投资组合配置建议
 
@@ -73,22 +73,24 @@
 | 龙头偏好 | 大公司资料远多于小公司，AI天然倾向推荐龙头 | 小公司可能有更好的风险回报比，不要因为AI分析篇幅短就忽略 |
 | 上市偏好 | 只扫描上市公司会遗漏产业链中的关键未上市玩家 | 必须搜索未上市公司，标注"未来IPO候选" |
 | 英文偏好 | AI对英文资料的处理能力更强，可能低估中国/亚洲市场玩家 | 必须同时搜索中英文信息源 |
+| adjusted metrics 偏好 | Non-GAAP 指标让利润质量看起来更好 | 强制检查 GAAP vs Non-GAAP、SBC、稀释、回购有效性 |
 
 **产业链扫描中的反偏见措施**：
 1. 对每个环节，不仅列出"AI容易找到的公司"，还要主动搜索"冷门但可能优质的标的"
 2. 对信息稀缺的小市值公司，不因分析篇幅短就降低推荐度——用核心问题（生意本质、护城河、管理层）而非报告长度来评判
 3. 在最终报告中标注每家公司的"信息充分度"（A/B/C级），让读者知道AI分析的可靠程度
 
-## 第三步：全球上市公司扫描
+## 第三步：美股上市公司扫描
 
 使用 Task 工具启动后台 Agent，全面搜索该行业所有上市公司。
 
 ### 搜索清单
-- 美股（NYSE/NASDAQ/NYSE American）相关公司
-- A股（上海/深圳）相关公司
-- 港股相关公司
-- 其他国际市场（日本/韩国/欧洲/澳大利亚等）
-- 行业ETF
+- 美股（NYSE / NASDAQ / NYSE American）相关公司
+- ADRs only if explicitly relevant
+- sector ETF holdings
+- thematic ETF holdings
+- competitors mentioned in 10-K filings
+- industry screeners
 - 关键未上市公司（可能未来IPO）
 
 ### 对每家公司收集
@@ -98,6 +100,8 @@
 - 一句话描述（在产业链中的位置和作用）
 - 是否纯正标的（纯核电 vs 多元化中有核电业务）
 - 产业链所属环节
+- 美股披露质量：主要 10-K/10-Q/8-K/IR 来源是否完整
+- 财务质量快照：revenue growth、gross margin、FCF margin、ROIC、SBC/revenue、share count trend、net cash/leverage
 
 ### 输出格式
 按产业链环节分类，每个环节一张表，包含所有扫描到的公司。
@@ -118,6 +122,7 @@
 - 收入结构与增速
 - 毛利率/净利率水平及趋势
 - 现金流特征
+- segment revenue / operating income / margin（如披露）
 - **追问**：这是一门好生意吗？为什么？
 
 ### 4.2 护城河（巴菲特）
@@ -146,6 +151,12 @@
 ### 4.5 估值快照
 - 当前PE/PS/EV/EBITDA
 - 与同环节竞争对手对比
+- 成熟盈利公司：P/E、EV/EBIT、EV/FCF、FCF yield、ROIC
+- 高增长软件：EV/Sales、Rule of 40、FCF margin、RPO growth、SBC-adjusted FCF
+- 半导体/硬件：cycle-normalized EPS、gross margin、inventory cycle、EV/EBIT
+- 金融：P/B、ROE、CET1、credit loss cycle
+- REIT：P/AFFO、implied cap rate、debt maturity
+- 生物医药：pipeline rNPV、cash runway、binary catalyst risk
 - 简评：贵了/合理/便宜
 
 ### 4.6 推荐度
@@ -169,6 +180,8 @@
 | 政策/监管黑天鹅 | | | |
 | 需求周期性回调 | | | |
 | 估值泡沫破裂 | | | |
+| SBC/稀释长期侵蚀股东收益 | | | |
+| 反垄断、出口管制、数据隐私、FDA 或行业专属监管 | | | |
 
 ### 5.2 历史类比
 找到历史上类似的产业链投资主题，分析其最终结局：
@@ -232,6 +245,11 @@
 | 文明趋势定位（李录） | | |
 | 整体估值水平 | | |
 
+### 美股披露质量总表
+
+| 环节 | 代表公司 | SEC/IR披露完整性 | GAAP/Non-GAAP差异 | SBC/稀释 | 关键风险 |
+|------|----------|------------------|-------------------|----------|----------|
+
 ### 四位大师模拟点评
 用引用格式，模拟四位大师对该行业投资机会的点评。
 
@@ -243,7 +261,7 @@
 2. 使用 Markdown 表格呈现关键数据
 3. 产业链全景图用代码块的文本图表示
 4. 每个环节至少分析2-3家头部公司
-5. 全球公司扫描要尽可能完整（A股/港股/美股/国际）
+5. 默认扫描美股要尽可能完整（NYSE / NASDAQ / NYSE American）；ADR 和非美市场只在明确相关时纳入
 6. 最终将完整报告写入 `~/[行业名]产业链投资研究报告.md`
 7. 结论要明确，给出具体的标的、仓位和价格区间建议
 8. 每个分析模块末尾有对应大师的"追问"
@@ -257,7 +275,7 @@
 python3 ~/ai-berkshire/tools/report_audit.py extract \
   --report <报告文件路径>
 
-# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+# Step 2 — 对清单每项从 SEC/IR 原始披露和可靠第三方源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
 python3 ~/ai-berkshire/tools/report_audit.py verdict \

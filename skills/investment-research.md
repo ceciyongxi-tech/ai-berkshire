@@ -1,6 +1,6 @@
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
 
-对 $ARGUMENTS 进行系统化投资研究分析。
+对 $ARGUMENTS 进行系统化投资研究分析。默认研究对象为美股上市公司，优先使用 SEC 原始披露、公司 IR、10-K/10-Q/8-K、earnings call、DEF 14A / Proxy Statement 和第三方财务数据库交叉验证。报告继续用中文输出。
 
 ## 研究框架
 
@@ -32,17 +32,45 @@
 
 将信息丰富度评级结果写入报告开头，并在最终结论中注明"AI研究置信度"与"实际投资确定性"的区别。
 
+### 前置步骤：美股公司类型与披露口径识别（必须执行）
+
+在数据收集前，先识别公司类型，并据此选择财报和估值口径：
+
+| 公司类型 | 必查披露 / 指标 | 特别注意 |
+|---------|----------------|----------|
+| US domestic issuer | 10-K / 10-Q / 8-K / earnings release / earnings call / DEF 14A | 标准美股主线 |
+| ADR | 20-F / 6-K / ADS ratio / 本国披露 | EPS、股价、股数必须按 ADS ratio 对齐 |
+| Foreign private issuer | 20-F / 6-K / IFRS 或本国 GAAP 调整 | 披露频率、会计准则、治理规则不同 |
+| SPAC / de-SPAC | S-1、424B、8-K、PIPE、warrants、earnout、lock-up | 股本和潜在稀释通常最复杂 |
+| REIT | FFO/AFFO、NOI、occupancy、cap rate、debt maturity | 不机械使用传统 PE |
+| BDC | NAV、NII、credit quality、leverage、portfolio marks | 重点看信用周期和估值折溢价 |
+| Bank / Insurance / Financial | NIM、CET1、ROE、loan loss provisions、combined ratio | 利率、信用、资本充足率优先 |
+| SaaS / Cloud | ARR、NRR、RPO、deferred revenue、Rule of 40、SBC | GAAP 亏损公司重点看 FCF 和稀释 |
+| Semiconductor | gross margin、inventory、customer concentration、capex cycle、export controls | 周期归一化利润比单年利润更重要 |
+| Consumer / Retail | same-store sales、traffic、ticket、gross margin、inventory、store economics | 渠道、品牌、库存和定价权优先 |
+| Biotech / Pharma | pipeline、cash runway、trial phase、FDA catalyst、LOE | 不用传统 PE 机械估值 |
+
+**美股特有事项强制检查**：
+- [ ] GAAP vs Non-GAAP reconciliation：调整项是否合理，是否连续扩大？
+- [ ] SBC 是否真实侵蚀股东收益：金额、占收入、占 FCF、股本稀释。
+- [ ] 回购是否抵消稀释：回购金额、均价、share count trend。
+- [ ] 管理层是否用 adjusted metrics 美化业绩。
+- [ ] 10-K Risk Factors 是否出现新的实质风险。
+- [ ] DEF 14A 中管理层薪酬与股东利益是否一致。
+- [ ] Insider transactions 仅作为辅助信号，不能替代基本面判断。
+- [ ] 13F 持仓变化仅作为参考，不能替代基本面判断。
+
 ### 第一步：数据收集
 
-> **数据源规范**：参见 `skills/financial-data.md`。所有财务数据必须来自两个独立来源，误差>1%须标记。
-> - 美股：macrotrends（主）+ stockanalysis（副）
-> - 港股：aastocks（主）+ macrotrends ADR（副）
-> - A股：东方财富（主）+ 巨潮资讯（副）
+> **数据源规范**：参见 `skills/financial-data.md`。美股研究必须 SEC/IR 原始披露优先，关键数据至少用一个独立第三方来源交叉验证，误差>1%须标记。
+> - 原始一手：SEC EDGAR、10-K、10-Q、8-K、DEF 14A、S-1/F-1、公司 Investor Relations、earnings release、earnings call transcript
+> - 第三方交叉验证：StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq / NYSE official quote pages
+> - Koyfin / TIKR / Seeking Alpha 仅作辅助，不作为唯一来源
 
 使用 Task 工具启动后台 Agent，从网络收集以下数据：
 
 1. 收入结构：最近财年及近4季度分部收入、增速、毛利率
-2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备
+2. 财务指标：近5年收入、GAAP净利润、Non-GAAP净利润、毛利率、经营利润率、经营现金流、自由现金流、现金储备
 3. 竞争格局：市场份额、主要竞争对手对比
 4. 商业模式与护城河：核心竞争优势来源
 5. 技术能力：核心技术栈、研发投入
@@ -51,17 +79,22 @@
 8. 风险因素：地缘政治、监管、供应链等
 9. 当前估值：市值、PE、PS、PEG、EV/Revenue
 10. 多空双方核心论点
+11. 美股必查：segment revenue / operating income、GAAP vs Non-GAAP、SBC、dilution、buybacks、debt/cash、RPO/deferred revenue/ARR/NRR（SaaS/云/订阅公司）
 
 #### 数据交叉验证（必须执行，使用金融严谨性工具）
 
 数据收集完成后，**必须调用 `tools/financial_rigor.py` 对关键数据进行程序化验证**，杜绝LLM心算误差。
 
 **必须验证的数据点**：
-- 总股本（从交易所、Yahoo Finance、StockAnalysis 等至少2个源确认）
-- 当前股价和市值（**手动计算 股价×总股本 并与报告市值对比，防止单位错误**）
-- 最近财年收入和净利润（从公司年报+至少1个第三方源确认）
+- 总股本（diluted weighted average shares 与 shares outstanding 分别说明，从 SEC/IR、交易所、Yahoo Finance、StockAnalysis 等至少2个源确认）
+- 当前股价和市值（**手动计算 股价×总股本 并与报告市值对比，防止单位错误；必须注明使用 diluted shares 还是 shares outstanding**）
+- 最近财年收入和净利润（从 10-K/10-Q + 至少1个第三方源确认；GAAP net income 与 Non-GAAP net income 分开）
 - 现金储备和净现金（现金+短期投资-总债务，注意口径差异）
 - 管理层持股比例（区分经济权益和投票权，注意AB股结构）
+- EPS（basic EPS、diluted EPS、adjusted EPS 分开）
+- FCF（Operating cash flow - CapEx，核对 CapEx 口径）
+- SBC（金额、占收入、占 FCF 的比例）
+- 回购与稀释（回购金额、回购价格、股本变化、可转债/期权/RSU）
 
 **强制验证步骤（使用Bash调用工具）**：
 
@@ -74,7 +107,7 @@ python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
 Step 2 — 关键数据多源交叉验证：
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
-  --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
+  --field {字段名} --values '{"10-K": 数值, "StockAnalysis": 数值}' --unit "USD million"
 ```
 对收入、净利润、现金储备分别执行。
 
@@ -93,6 +126,10 @@ python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
 
 **常见错误防范**：
 - 市值单位：港币亿 vs 人民币亿 vs 美元亿，容易漏写/多写一个零
+- 美股单位：USD / USD million / USD billion / USD trillion 混用，容易漏写/多写三个零
+- 股本口径：diluted weighted average shares、basic shares、shares outstanding 不能混用
+- GAAP vs Non-GAAP：adjusted EPS、adjusted net income 不能直接替代 GAAP
+- SBC：Non-GAAP 常剔除 SBC，但股东实际承担稀释
 - FCF口径：不同来源对资本支出的定义可能不同（是否含租赁、收购等）
 - 债务口径：是否包含经营租赁负债
 - 持股比例：AB股公司的经济权益 ≠ 投票权
@@ -170,11 +207,34 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 - 与自身历史估值对比
 - 与同行估值对比
 
+**按公司类型选择估值口径**：
+
+| 类型 | 主要估值指标 |
+|------|-------------|
+| 成熟盈利公司 | P/E、EV/EBIT、EV/FCF、FCF yield、ROIC |
+| 高增长软件 | EV/Sales、Rule of 40、FCF margin、RPO growth、SBC-adjusted FCF |
+| 半导体 | cycle-normalized EPS、gross margin、inventory cycle、EV/EBIT |
+| 金融 | P/B、ROE、CET1、NIM、credit loss cycle |
+| REIT | P/AFFO、implied cap rate、NOI、debt maturity |
+| 生物医药 | pipeline rNPV、cash runway、binary catalyst risk |
+
 **段永平式追问**：如果股市明天关闭5年，你愿意以这个价格持有吗？
 
 ### 第八步：综合决策备忘录
 
 汇总表格：
+
+**美股披露与口径检查表（必须包含）**：
+
+| 检查项 | 结论 | 来源 |
+|--------|------|------|
+| SEC filing checklist | 10-K / 10-Q / 8-K / DEF 14A / 20-F / 6-K 是否查阅 | |
+| GAAP vs Non-GAAP table | 调整项、差额、是否合理 | |
+| SBC and dilution table | SBC、占收入、占 FCF、股本变化 | |
+| Buyback effectiveness table | 回购金额、均价、股本是否下降 | |
+| Segment economics table | 分部收入、经营利润、margin | |
+| Key shareholder questions | 股东最该追问的问题 | |
+| Bull / bear debate | 多空论点和证据 | |
 
 | 维度 | 结论 | 信心度 |
 |------|------|--------|
@@ -207,6 +267,7 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 7. **报告开头**必须包含"信息丰富度评级"（A/B/C）和"AI研究局限性声明"
 8. **报告结尾**必须区分"AI分析置信度"与"投资确定性"——前者取决于资料量，后者取决于生意本质。明确告知读者：本报告的哪些结论基于充分数据，哪些基于有限信息的推理
 9. 如果公司属于C级（信息稀缺），报告末尾必须列出"需要一手验证的问题清单"——建议读者通过田野调查、产品体验、供应链访谈等方式补充AI的盲区
+10. 美股报告最终评级必须明确落到：买入 / 观察 / 回避 / 数据不足
 
 ## 数据抽检（准出流程）
 
@@ -221,7 +282,7 @@ python3 ~/ai-berkshire/tools/report_audit.py extract \
 
 **Step 2 — 取数核验：**
 对清单中每个数据点，按 `skills/financial-data.md` 规范从可靠信源取数
-（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），
+（美股：SEC/IR 原始披露 + StockAnalysis / Macrotrends / CompaniesMarketCap 等第三方交叉验证），
 填入 `fetched_value` / `fetched_source` / `fetched_value2` / `fetched_source2`。
 
 **Step 3 — 输出判决：**

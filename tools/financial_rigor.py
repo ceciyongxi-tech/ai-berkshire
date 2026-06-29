@@ -8,11 +8,11 @@ Zero external dependencies — uses only Python stdlib (decimal, json, math, arg
 Requires Python >= 3.7.
 
 Usage (called automatically by Skills, no manual execution needed):
-    python3 tools/financial_rigor.py verify-market-cap --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
-    python3 tools/financial_rigor.py verify-valuation --price 510 --eps 23.5 --bvps 120 --fcf-per-share 18 --dividend 2.4
-    python3 tools/financial_rigor.py cross-validate --field revenue --values '{"年报": 7518, "Yahoo": 7500, "StockAnalysis": 7520}' --unit 亿
+    python3 tools/financial_rigor.py verify-market-cap --price 430 --shares 15.4e9 --reported 6.62e12 --currency USD
+    python3 tools/financial_rigor.py verify-valuation --price 430 --eps 13.0 --fcf-per-share 10.8 --dividend 1.04
+    python3 tools/financial_rigor.py cross-validate --field revenue --values '{"10-K": 281700, "StockAnalysis": 281700, "Macrotrends": 281700}' --unit "USD million"
     python3 tools/financial_rigor.py benford --values '[1234, 2345, 3456, ...]'
-    python3 tools/financial_rigor.py calc --expr '510 * 9.11e9'
+    python3 tools/financial_rigor.py calc --expr '430 * 15.4e9'
 """
 
 import argparse
@@ -80,7 +80,7 @@ def verify_market_cap(price, shares, reported_cap, currency=""):
     if deviation > 5:
         print(f"  ❌ 警告: 偏差 {deviation:.1f}% > 5%, 请检查:")
         print(f"     - 股本是否为最新（回购/增发）?")
-        print(f"     - 单位是否一致（港币 vs 人民币 vs 美元）?")
+        print(f"     - 单位是否一致（USD / million / billion / trillion）?")
         print(f"     - 股价是否为最新?")
         return False
     elif deviation > 1:
@@ -196,7 +196,7 @@ def cross_validate(field_name, source_values: dict, unit="", tolerance_pct=2.0):
         print(f"  ✅ 所有来源偏差 ≤ {tolerance_pct}%, 数据一致")
     else:
         print(f"  ⚠️  存在来源偏差 > {tolerance_pct}%, 请核实差异原因")
-        print(f"     建议: 优先采用公司年报/交易所数据")
+        print(f"     建议: 优先采用 SEC filings / company IR 原始披露")
 
     # Consensus value
     consensus = median
@@ -370,11 +370,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s verify-market-cap --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
-  %(prog)s verify-valuation --price 510 --eps 23.5 --bvps 120
-  %(prog)s cross-validate --field revenue --values '{"年报": 7518, "Yahoo": 7500}' --unit 亿
+  %(prog)s verify-market-cap --price 430 --shares 15.4e9 --reported 6.62e12 --currency USD
+  %(prog)s verify-valuation --price 430 --eps 13.0 --fcf-per-share 10.8
+  %(prog)s cross-validate --field revenue --values '{"10-K": 281700, "StockAnalysis": 281700}' --unit "USD million"
   %(prog)s benford --values '[1234, 2345, 3456, ...]'
-  %(prog)s calc --expr '510 * 9.11e9'
+  %(prog)s calc --expr '430 * 15.4e9'
         """)
 
     sub = parser.add_subparsers(dest="command")

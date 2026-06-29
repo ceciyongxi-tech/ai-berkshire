@@ -1,6 +1,6 @@
-# 投研团队：四角色并行分析框架
+# 投研团队：美股四角色并行分析框架
 
-对 $ARGUMENTS 进行团队化投资研究分析。使用 Team 工具创建真正的多Agent并行研究团队。
+对 $ARGUMENTS 进行团队化美股投资研究分析。使用 Team 工具创建真正的多Agent并行研究团队。默认数据源为 SEC/IR 优先，StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 用于交叉验证；禁止只用新闻或二手摘要。
 
 ## 执行流程
 
@@ -11,10 +11,10 @@
 | 角色 | 职责 | 分析框架 |
 |------|------|----------|
 | **team-lead**（你自己） | 统筹协调、汇总研判、输出最终报告 | 四大师综合框架 |
-| **business-analyst** | 商业模式 & 护城河分析 | 段永平视角 |
-| **financial-analyst** | 财务报表 & 估值分析 | 巴菲特视角 |
-| **industry-researcher** | 行业格局 & 竞争态势 | 芒格视角 |
-| **risk-assessor** | 风险评估 & 管理层研判 | 李录视角 |
+| **business-analyst** | 商业模式、客户、定价权、产品替代性、网络效应、生态锁定 | 段永平视角 |
+| **financial-analyst** | 10-K/10-Q 财务拆解、GAAP vs Non-GAAP、SBC、回购、稀释、FCF质量、ROIC/FCF yield | 巴菲特视角 |
+| **industry-researcher** | 美股行业格局、竞争对手 filings、ETF holdings、市场规模、份额、增长、周期位置 | 芒格视角 |
+| **risk-assessor** | 10-K risk factors、监管、诉讼、DEF 14A薪酬、insider transactions、capital allocation、失败路径 | 李录视角 |
 
 ### 第一步半：AI研究偏见评估
 
@@ -31,6 +31,8 @@
 
 将评级结果告知每个Agent，影响其研究方式。
 
+同时识别美股公司类型并告知每个 Agent：US domestic issuer / ADR / Foreign private issuer / SPAC or de-SPAC / REIT / BDC / Bank / Insurance / Financial / SaaS / Cloud / Semiconductor / Consumer / Retail / Biotech / Pharma。不同类型必须采用对应财报口径和估值指标，例如 ADR/FPI 查 20-F/6-K/ADS ratio，金融看 NIM/CET1/ROE/loan loss provisions，REIT 看 FFO/AFFO/NOI/cap rate/debt maturity，SaaS 看 ARR/NRR/RPO/deferred revenue/Rule of 40/SBC，半导体看 gross margin/inventory/customer concentration/capex cycle/export controls，生物医药看 pipeline/cash runway/trial phase/FDA catalyst。
+
 ### 第二步：创建团队
 
 使用 TeamCreate 创建团队：
@@ -44,24 +46,25 @@
 #### 任务1：商业模式分析
 - subject: `分析{公司名}商业模式、护城河与用户价值`
 - description 包含：
-  1. 商业模式本质：核心生意定义、收入结构拆解
+  1. 商业模式本质：基于 10-K business section 定义核心生意、客户、产品和收入结构
   2. 平台/产品飞轮效应如何运转
   3. 护城河分析：品牌/转换成本/网络效应/规模效应/技术壁垒，逐一验证
-  4. 用户/客户价值：为各方创造了什么独特价值
+  4. 用户/客户价值：为各方创造了什么独特价值，客户集中度是否过高
   5. 业务矩阵与协同效应
   6. 段永平"好生意"标准评估：差异化、定价权、可持续竞争优势
-  7. 要求搜索最新财报、行业报告等公开信息
+  7. 必须基于 10-K business section、segment disclosure、customer concentration、竞争对手 filings；行业报告只能辅助
 
 #### 任务2：财务与估值分析
-- subject: `分析{公司名}财务数据、盈利能力与估值`
+- subject: `分析{公司名}10-K/10-Q财务质量、GAAP/Non-GAAP、SBC、回购、稀释与估值`
 - description 包含：
-  1. 近3-5年营收、净利润、经营利润趋势
-  2. 盈利能力指标：ROE、ROA、毛利率、经营利润率
-  3. 现金流分析：经营性现金流、自由现金流、资本开支
-  4. 资产负债表健康度：现金储备、负债率、流动性
-  5. 估值分析：PE/PS/PB/EV等，与历史及同业对比
-  6. 安全边际评估：内在价值 vs 当前股价
-  7. **金融严谨性验证（必须使用Bash调用工具，禁止心算）**：
+  1. 近3-5年营收、GAAP净利润、Non-GAAP净利润、经营利润趋势
+  2. 盈利能力指标：ROE、ROA、ROIC、毛利率、经营利润率、FCF margin
+  3. 现金流分析：经营性现金流、自由现金流、资本开支，核对 FCF = OCF - CapEx 口径
+  4. 资产负债表健康度：现金、短投、债务、净现金/净债务、流动性
+  5. GAAP vs Non-GAAP reconciliation、SBC、回购、股本稀释、diluted weighted average shares vs shares outstanding
+  6. 估值分析：成熟盈利公司看 P/E、EV/EBIT、EV/FCF、FCF yield、ROIC；高增长软件看 EV/Sales、Rule of 40、FCF margin、RPO growth、SBC-adjusted FCF；半导体看 cycle-normalized EPS、inventory cycle；金融/REIT/生物医药使用专属口径
+  7. 安全边际评估：内在价值 vs 当前股价
+  8. **金融严谨性验证（必须使用Bash调用工具，禁止心算）**：
      - 市值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap --price {价格} --shares {股本} --reported {报告市值} --currency {币种}`
      - 估值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation --price {价格} --eps {EPS} --bvps {每股净资产}`
      - 关键数据交叉验证：`python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate --field {字段} --values '{JSON}' --unit {单位}`
@@ -72,24 +75,27 @@
 - subject: `分析{行业}行业格局与{公司名}竞争态势`
 - description 包含：
   1. 行业规模与增长：市场规模、增速、渗透率
-  2. 竞争格局：主要对手市场份额、竞争策略对比
+  2. 竞争格局：基于竞争对手 10-K/20-F/6-K、ETF holdings、industry lists 召回并交叉验证主要对手市场份额、竞争策略对比
   3. 核心竞争者威胁评估：逐个分析主要竞争对手
   4. 各细分赛道格局
   5. 行业趋势：技术变革、政策影响、新进入者
   6. 产业链分析：上中下游价值分配
-  7. 要求搜索最新行业数据和竞争动态
+  7. 要求搜索最新行业数据和竞争动态；SaaS 检查 Rule of 40，硬件/半导体检查 inventory cycle，消费/零售检查库存和同店销售，金融/REIT 使用行业专属指标
 
 #### 任务4：风险与管理层评估
 - subject: `评估{公司名}投资风险与管理层质量`
 - description 包含：
   1. 管理层评估：CEO能力圈、诚信度、战略眼光、资本配置能力、历史决策质量
-  2. 监管风险：当前及潜在监管影响
-  3. 竞争风险：各竞争对手威胁程度评估
-  4. 业务风险：新业务亏损、扩张不确定性
-  5. 宏观风险：经济周期、行业周期影响
-  6. 治理结构：股权结构、关联交易、股东回报政策
-  7. 长期确定性：10年后公司会怎样？什么可能颠覆其商业模式？
-  8. 要求搜索最新监管动态、管理层言论等
+  2. 10-K risk factors：新增、加重、措辞变化的实质风险
+  3. 监管风险：当前及潜在监管影响，包括反垄断、出口管制、数据隐私、FDA 或行业专属监管
+  4. 竞争风险：各竞争对手威胁程度评估
+  5. 业务风险：新业务亏损、扩张不确定性
+  6. 宏观风险：经济周期、行业周期影响
+  7. DEF 14A：管理层薪酬、绩效指标、股权激励、董事会独立性、股东利益一致性
+  8. Insider transactions 和 Form 4 仅作为辅助信号
+  9. 治理结构：股权结构、关联交易、股东回报政策
+  10. 长期确定性：10年后公司会怎样？什么可能颠覆其商业模式？
+  11. 要求搜索最新监管动态、管理层言论等
 
 ### 第四步：启动4个并行Agent
 
@@ -112,8 +118,10 @@
 {任务description的内容}
 
 **研究方法**：
-- 使用 WebSearch 搜索最新公开信息（财报、行业报告、新闻）
-- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），两源误差>1%须标记
+- 使用 WebSearch 搜索最新公开信息，但默认顺序为 SEC EDGAR、公司 IR、10-K、10-Q、8-K、DEF 14A、earnings release、earnings call transcript
+- 第三方数据只作交叉验证：StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages
+- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行；GAAP 与 Non-GAAP、basic/diluted/adjusted EPS、diluted weighted average shares/shares outstanding 必须分开，两源误差>1%须标记
+- 禁止只用新闻、博客、券商摘要或二手数据库形成结论
 - 确保数据准确，关键数据标注来源
 - 分析要深入，不流于表面
 
@@ -155,6 +163,8 @@
 #### 3. 核心数据速览
 关键财务和经营指标表格（近2年对比）
 
+必须额外包含美股口径表：SEC filing checklist、GAAP vs Non-GAAP table、SBC and dilution table、buyback effectiveness table、segment economics table。
+
 #### 4. 各维度分析摘要
 每个维度摘取3-5条最重要的发现
 
@@ -170,6 +180,7 @@
 - 定性判断表（生意质量/管理层/估值/时机）
 - 分层操作建议表（激进型/稳健型/保守型 → 建议+价格区间）
 - 关键催化剂（加仓信号/减仓信号各3-5条）
+- 最终评级必须落到：买入 / 观察 / 回避 / 数据不足
 
 #### 8. 总结段落
 100-200字的最终总结
@@ -187,7 +198,7 @@
 python3 ~/ai-berkshire/tools/report_audit.py extract \
   --report <报告文件路径>
 
-# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+# Step 2 — 对清单每项从 SEC/IR 原始披露和可靠第三方源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
 python3 ~/ai-berkshire/tools/report_audit.py verdict \
@@ -211,3 +222,5 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 6. **耐心等待**——4个Agent研究需要几分钟，实时向用户更新进度
 7. **反偏见意识**——team-lead在汇总时必须评估：各Agent的分析是否受限于资料充裕度？是否与市场共识过度趋同？最终报告需包含"信息丰富度评级"和"AI研究局限性声明"
 8. **信息稀缺时的诚实原则**——宁可在报告中留白标注"数据不足"，也不要用推测填满框架伪装确定性
+9. **美股披露优先**——所有 Agent 默认 SEC/IR 优先，StockAnalysis/Macrotrends/CompaniesMarketCap 辅助，禁止只用新闻或二手摘要
+10. **美股口径必查**——GAAP vs Non-GAAP、SBC、回购、稀释、segment economics、share count 是默认检查项

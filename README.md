@@ -1,12 +1,12 @@
 中文 | [English](README_EN.md)
 
-# AI Berkshire - AI 时代的价值投资研究框架
+# AI Berkshire - 面向美股的 AI 价值投资研究系统
 
 > "Price is what you pay, value is what you get." — Warren Buffett
 >
-> 用 AI 重新定义投资研究的深度与效率。
+> 用 AI 重新定义美股投资研究的深度与效率。
 
-**AI Berkshire** 是一套同时兼容 Claude Code 与 Codex 的投资研究 Skill 合集，将巴菲特、芒格、段永平、李录四位价值投资大师的方法论系统化、结构化，通过 AI Agent 实现专业级投资研究。
+**AI Berkshire** 是一套同时兼容 Claude Code 与 Codex 的美股投资研究 Skill 合集。项目默认面向美国上市公司、美股行业、美股财报和 SEC 披露体系，核心使用 SEC 原始披露、公司 IR、10-K/10-Q/8-K、earnings call、proxy statement、第三方财务数据库交叉验证，结合巴菲特、芒格、段永平、李录四位价值投资大师框架，输出可复盘的中文美股投资研究报告。
 
 一个人 + Claude Code / Codex = 一个投研团队。
 
@@ -94,15 +94,15 @@ AI最危险的不是给错答案，而是给一个**看起来很对但经不起�
 
 ### 4. 金融数据的精确性
 
-LLM心算不可靠。PE算错一个小数点、市值单位搞混港币和人民币，就可能导致错误的投资决策。
+LLM心算不可靠。PE算错一个小数点、市值单位搞混 USD million 和 USD billion，就可能导致错误的投资决策。
 
-**真实案例**：分析腾讯时，不同来源的市值数据有"港币亿"和"人民币亿"两种单位。AI Berkshire 的处理方式：
+**美股研究案例**：分析 Microsoft 时，不同来源可能混用 diluted weighted average shares、shares outstanding、USD million 和 USD billion。AI Berkshire 的处理方式：
 
 ```bash
 # 市值手算校验：股价 × 总股本，与报告数据对比
 python3 tools/financial_rigor.py verify-market-cap \
-  --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
-# ✅ 验证通过, 偏差仅 0.08%
+  --price 430 --shares 7.43e9 --reported 3.19e12 --currency USD
+# ✅ 使用 Decimal 精确十进制验算，避免单位和股本口径错误
 ```
 
 所有计算使用 Python `decimal.Decimal`（精确十进制），不用 `float`。关键数据至少2个独立来源交叉验证。
@@ -283,39 +283,41 @@ cd ai-berkshire
 
 ```bash
 # 深度研究
-/investment-research 腾讯
-/investment-team 美团
+/investment-research Microsoft
+/investment-team NVIDIA
 /management-deep-dive 王兴 美团
 /private-company-research SpaceX
 /deep-company-series 拼多多
 
 # 财报分析
-/earnings-review 腾讯 2025Q4
-/earnings-team PDD 2025年报
+/earnings-review AAPL FY2026 Q2 10-Q 8-K transcript
+/earnings-team NVDA FY2026 Q1 earnings release transcript
 
 # 行业筛选
-/industry-research 核电
-/industry-funnel AI算力
+/industry-research US semiconductor equipment
+/industry-funnel US AI software stocks
 /quality-screen 恒生指数成分股
 /bottleneck-hunter AI基础设施
-/investment-checklist 茅台, 英伟达, 苹果
+/investment-checklist MSFT, NVDA, AAPL
 
 # 持仓管理
-/portfolio-review 腾讯30%, 美团20%, 茅台20%, 现金30%
-/thesis-tracker 拼多多
-/news-pulse 腾讯
+/portfolio-review MSFT30%, NVDA20%, AMZN20%, 现金30%
+/thesis-tracker Amazon
+/news-pulse NVDA
 
 # 思维工具
-/dyp-ask 拼多多的护城河到底在哪里？
+/dyp-ask Microsoft 的护城河到底在哪里？
 /wechat-article 大模型OPD技术解读
 ```
 
 在 Codex 中安装后重启 Codex，然后直接按 skill 名称描述任务，例如：
 
 ```text
-使用 investment-research 研究腾讯
-使用 earnings-review 分析 PDD 2025年报
-使用 industry-funnel 筛选 AI算力
+使用 investment-research 研究 Microsoft
+使用 investment-team 研究 NVIDIA
+使用 earnings-review 分析 Apple 2026 Q2
+使用 industry-funnel 筛选 US AI software stocks
+使用 thesis-tracker 跟踪 Amazon
 使用 bottleneck-hunter 扫描 AI基础设施瓶颈
 使用 wechat-article 写大模型OPD技术解读
 ```
@@ -323,10 +325,23 @@ cd ai-berkshire
 如果安装了 Codex slash prompts，重启 Codex 后也可以在 `/` 菜单里搜索这些 prompt。Codex 官方的 custom prompt 入口通常显示为 `prompts:<name>`，例如：
 
 ```text
-/prompts:investment-research 腾讯
+/prompts:investment-research Microsoft
 ```
 
 ---
+
+## 如何研究美股公司
+
+AI Berkshire 的默认研究流程是：
+
+1. 识别公司类型：US domestic issuer、ADR/FPI、REIT、Financial、SaaS/Cloud、Semiconductor、Consumer/Retail、Biotech/Pharma 等。
+2. 回到一手披露：优先查 SEC EDGAR、公司 IR、10-K、10-Q、8-K、DEF 14A、earnings release、earnings call transcript。
+3. 做口径检查：GAAP vs Non-GAAP、basic/diluted/adjusted EPS、diluted weighted average shares vs shares outstanding、SBC、回购、稀释、FCF、segment economics。
+4. 做交叉验证：用 StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 核对收入、净利润、股本、市值、现金、债务和估值。
+5. 套用四大师框架：段永平看生意本质，巴菲特看护城河和现金流，芒格做逆向风险，李录看长期文明趋势和永久性资本损失。
+6. 输出中文报告：结论必须落到 买入 / 观察 / 回避 / 数据不足，并保留数据来源和审计记录。
+
+非美股公司仍可研究，但属于例外路径，报告必须说明使用了哪套当地披露体系。
 
 ## 各 Skill 详细介绍
 
@@ -583,9 +598,9 @@ cd ai-berkshire
 调用方式：
 
 ```
-/news-pulse 腾讯
-/news-pulse 拼多多 跌12% 一周内
-/news-pulse 米哈游
+/news-pulse NVDA
+/news-pulse MSFT 跌8% 一周内
+/news-pulse AMZN
 ```
 
 ---

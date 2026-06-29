@@ -1,11 +1,11 @@
-# 行业漏斗筛选：从全市场到 3 家的价值投资精选流程
+# 行业漏斗筛选：从美股市场到 3 家的价值投资精选流程
 
-对 $ARGUMENTS 行业/方向执行漏斗式价值投资筛选，从全市场扫描逐层精选到 3 家终选标的。
+对 $ARGUMENTS 行业/方向执行漏斗式价值投资筛选，默认从美股市场（NYSE / NASDAQ / NYSE American）扫描逐层精选到 3 家终选标的。ADR 只有在行业相关且用户明确需要时纳入。
 
 ## 适用场景
 
 当你说出一个行业或投资方向（如"AI 算力"、"创新药"、"机器人"），想要：
-1. 不遗漏任何重要标的（含 A 股、港股、美股、未上市候选）
+1. 不遗漏任何重要美股标的（含 NYSE、NASDAQ、NYSE American；ADR 仅在明确相关时纳入）
 2. 用统一标准过滤掉"故事股"和质量不足的公司
 3. 把精力聚焦到真正值得深度研究的 3 家头部
 4. 每层有明确的留/弃标准，可复盘可追溯
@@ -21,7 +21,7 @@
 ## 漏斗结构总览
 
 ```
-第一层：全市场扫描     30-60 家   （活跃度+涨幅+市值前 30 的并集）
+第一层：美股市场扫描   30-80 家   （活跃度+市值+ETF holdings+10-K竞争对手+screeners 的并集）
         ↓ 价值投资 5 条硬指标
 第二层：粗筛             ≤ 10 家   （5 条全部及格 + 护城河 ★★★ 以上）
         ↓ 精细分析
@@ -41,7 +41,7 @@
 ### 1.1 活跃股票定义（三类并集）
 
 **A 类 - 成交活跃度**：
-- 近 30 天日均成交额排名行业前列（A 股/港股/美股各自取前 30）
+- 近 30 天日均成交额排名行业前列（NYSE / NASDAQ / NYSE American）
 
 **B 类 - 涨幅榜**：
 - 近 30 天涨幅前 20
@@ -51,17 +51,28 @@
 **C 类 - 市值锚定**：
 - 行业内市值前 30（无论涨跌）
 
-最终扫描池 = A ∪ B ∪ C，预期 30-60 家。
+**D 类 - ETF holdings 召回**：
+- sector ETF holdings
+- thematic ETF holdings
+- 按 holdings 权重和业务纯度召回
+
+**E 类 - filings / screeners 召回**：
+- competitors mentioned in 10-K filings
+- industry screeners
+- StockAnalysis、Yahoo Finance、Nasdaq/NYSE lists
+
+最终扫描池 = A ∪ B ∪ C ∪ D ∪ E，预期 30-80 家。
 
 ### 1.2 必须搜索的市场
 
 | 市场 | 来源建议 |
 |------|---------|
-| A 股（沪深） | 同花顺/东方财富行业板块、通达信 |
-| 港股 | 富途/同花顺港股、HKEX 行业分类 |
-| 美股 | NASDAQ/NYSE 行业 ETF 持仓、Yahoo Finance |
-| 国际市场 | 日韩台欧的相关公司不能漏（特别是半导体、电子） |
-| 未上市公司 | 单列"未来 IPO 候选"小节，注明最新估值与潜在 IPO 时间 |
+| 美股 | NYSE / NASDAQ / NYSE American |
+| ETF holdings | sector ETFs、thematic ETFs |
+| Filings 召回 | competitors mentioned in 10-K filings |
+| 行业筛选器 | StockAnalysis、Yahoo Finance、Nasdaq/NYSE lists、其他 industry screeners |
+| ADR | only if explicitly relevant |
+| 未上市公司 | 单列"未来 IPO 候选"小节，注明最新估值与潜在 IPO 时间；不作为可直接买入标的 |
 
 ### 1.3 输出格式
 
@@ -71,6 +82,7 @@
 **关键自查**：
 - 行业占比 < 30% 的"沾边股"要谨慎，标注"非纯正标的"
 - 中国/亚洲市场不要因英文资料少而漏掉
+- 默认美股研究中，非美市场只作为竞争格局或 ADR 例外补充，不作为默认扫描池
 - 小市值公司不要因为 AI 偏好龙头而漏
 
 ---
@@ -88,6 +100,27 @@
 | 3 | 经营现金流 | 为正且占净利润 > 70% | — | 财报 |
 | 4 | 资产负债率 | < 60% | 公用事业/电力可放宽至 70% | 财报 |
 | 5 | 护城河快评 | ★★★ 以上 | — | 定性判断 |
+
+### 2.1.1 美股质量补充指标（必须检查）
+
+| 指标 | 说明 |
+|------|------|
+| ROIC | 高于行业平均或持续改善 |
+| FCF margin | 现金流质量和商业模式轻重 |
+| gross margin stability | 定价权和竞争压力 |
+| revenue growth durability | 增长是否可持续，不只单季爆发 |
+| SBC / revenue | 软件和高成长公司必须可接受且趋势受控 |
+| net cash or leverage | 净现金更佳；债务期限和利率必须可承受 |
+| share count trend | 回购是否抵消稀释 |
+| customer concentration | 大客户依赖是否过高 |
+| regulatory / antitrust risk | 是否影响长期现金流 |
+
+行业专属指标：
+- Software / SaaS：Rule of 40、ARR、NRR、RPO、deferred revenue、SBC-adjusted FCF。
+- Hardware / Semiconductor：inventory cycle、gross margin、customer concentration、capex cycle、export controls。
+- Financial：P/B、ROE、CET1、NIM、credit loss cycle。
+- REIT：FFO/AFFO、NOI、cap rate、debt maturity。
+- Biotech / Pharma：pipeline、cash runway、trial phase、FDA catalyst。
 
 **护城河 5 类**：
 - 品牌/定价权
@@ -125,6 +158,7 @@
 **财务质量**：
 - 收入增速 / 利润增速 / 毛利率 / ROE / 现金流
 - 关键变化（近 1-2 年最重要的财务转折点）
+- 美股补充：ROIC / FCF margin / SBC-revenue / share count trend / net cash or leverage
 
 **护城河深度**：
 - 主要护城河类型 + 具体证据
@@ -138,6 +172,7 @@
 **估值快评**：
 - 当前 PE/PS/EV/EBITDA + 历史区间位置
 - 同业对比
+- 成熟盈利公司看 P/E、EV/EBIT、EV/FCF、FCF yield、ROIC；软件看 EV/Sales、Rule of 40、FCF margin、RPO growth、SBC-adjusted FCF；半导体看 cycle-normalized EPS、inventory cycle；金融/REIT/生物医药用专属口径
 - 一句话结论：贵 / 合理 / 便宜
 
 **进入终选 3 家？**：是 / 否（理由）
@@ -170,6 +205,7 @@
 - 用五类护城河打分（★1-5），列具体证据
 - 10 年后护城河还在吗？
 - 现在买入的"安全边际"在哪？
+- 美股披露口径：10-K/10-Q/8-K/DEF 14A 中是否支持护城河判断？
 
 | 护城河 | 强度 | 具体证据 |
 |-------|------|---------|
@@ -219,7 +255,7 @@
 
 ### 5.2 行业级 ETF 替代
 
-如果不想选股，列 1-3 个相关 ETF（A 股/港股/美股）。
+如果不想选股，列 1-3 个相关美股 sector/thematic ETF，并说明 holdings 纯度、费用率、头部集中度和是否能替代个股组合。
 
 ### 5.3 整体行业位置判断
 
@@ -256,6 +292,8 @@ A = 数据充分可信；B = 部分缺失但不影响主结论；C = 缺失较�
 |------|-----|------|
 | 龙头偏好 | 大市值公司资料多、分析篇幅长，看起来"更好" | 按硬指标和护城河打分，不按报告篇幅排序 |
 | 英文偏好 | 美股资料丰富，A 股港股容易被低估 | 必须中英文都搜，A/H 公司不能漏 |
+| adjusted metrics 偏好 | Non-GAAP 指标美化增长 | 强制 GAAP vs Non-GAAP、SBC、稀释、回购有效性检查 |
+| 单一数据库偏好 | 只看一个 screener 或财务网站 | SEC/IR + 第三方交叉验证 |
 | 故事偏好 | 高涨幅 + 媒体热度 = 看起来更好的"AI 概念股" | 区分"AI 收入占比" vs "AI 故事占比"，看真实业务 |
 | 当下偏好 | 当前财务好的公司容易入选，可能错过转型期黑马 | 第二层粗筛允许"趋势改善"作为放宽条件 |
 | 上市偏好 | 只看上市公司可能错过赛道最好的玩家 | 必须列"未来 IPO 候选"，标注估值与时间窗 |
@@ -283,7 +321,7 @@ A = 数据充分可信；B = 部分缺失但不影响主结论；C = 缺失较�
 python3 ~/ai-berkshire/tools/report_audit.py extract \
   --report <报告文件路径>
 
-# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+# Step 2 — 对清单每项从 SEC/IR 原始披露和可靠第三方源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
 python3 ~/ai-berkshire/tools/report_audit.py verdict \

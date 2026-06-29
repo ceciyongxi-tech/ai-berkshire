@@ -1,6 +1,6 @@
 ---
 name: earnings-review
-description: "AI Berkshire skill: 财报精读：一手资料深度解读. Source: skills/earnings-review.md."
+description: "AI Berkshire skill: 财报精读：美股一手资料深度解读. Source: skills/earnings-review.md."
 ---
 
 ## Codex adapter note
@@ -12,11 +12,11 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
-# 财报精读：一手资料深度解读
+# 财报精读：美股一手资料深度解读
 
-对 $ARGUMENTS 进行财报精读分析。
+对 $ARGUMENTS 进行美股财报精读分析。
 
-**支持输入格式**：`公司名 季度`，例如：`腾讯 2025Q4`、`PDD 2025年报`、`美团 最新`（默认读取最近一期）
+**强制输入**：company ticker、fiscal period、10-Q / 10-K / 8-K / earnings release / earnings call transcript。示例：`AAPL FY2026 Q2 10-Q 8-K transcript`、`MSFT FY2026 Q3 10-Q transcript`、`NVDA FY2026 Q1 earnings release transcript`。
 
 > "我从不看卖方研报，只读原始财报。" —— 李录
 >
@@ -31,7 +31,7 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 有时滞——等别人消化完，alpha已经没了
 - 缺乏语境——"收入增长15%"脱离了管理层对增长质量的讨论
 
-本Skill直接解读一手资料，关注巴菲特和李录真正会看的内容。
+本Skill直接解读一手资料，关注巴菲特和李录真正会看的内容。默认研究对象为美国上市公司，核心材料是 SEC EDGAR、公司 IR、10-K、10-Q、8-K、earnings release、earnings call transcript；第三方财务网站只用于交叉验证，不作为唯一来源。
 
 ## 执行流程
 
@@ -39,20 +39,22 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 
 | 等级 | 特征 | 影响 |
 |------|------|------|
-| A级 | 获取到完整原文（10-K/年报/电话会纪要） | 正常执行全部步骤 |
-| B级 | 仅获取到部分原文或第三方汇总 | 标注"非原始来源"，降低附注分析权重 |
+| A级 | 获取到完整原文（10-Q/10-K、8-K、earnings release、电话会纪要） | 正常执行全部步骤 |
+| B级 | 仅获取到部分原文或第三方汇总 | 标注"非原始来源"，降低附注和 Q&A 分析权重 |
 | C级 | 仅有新闻报道和数据网站摘要 | 聚焦核心财务数据变化，跳过附注挖掘，标注"一手资料不足" |
+
+同时识别公司类型：US domestic issuer / ADR / Foreign private issuer / REIT / Financial / SaaS / Cloud / Semiconductor / Consumer / Retail / Biotech / Pharma，并选择对应财报口径。
 
 ### 第一步：获取一手资料
 
 使用 Task 工具启动多个后台 Agent **并行**获取以下原始材料：
 
-1. **财报原文**：从公司IR页面、SEC EDGAR（美股10-K/10-Q）、港交所披露易（港股）、巨潮资讯网（A股）获取
-2. **业绩电话会纪要/录音**：从 Seeking Alpha、公司IR页面、雪球等获取
+1. **财报原文**：从 SEC EDGAR、公司IR页面获取 10-Q / 10-K / 8-K；如涉及治理和薪酬，补充 DEF 14A
+2. **业绩电话会纪要/录音**：从公司IR页面、Seeking Alpha、Motley Fool、TIKR/Koyfin 等获取
 3. **管理层致股东信**（如有年报）：完整阅读
 4. **投资者日/分析师日材料**（如近期有）
 
-如果无法获取完整原文，按 `skills/financial-data.md` 规范使用标准数据源拼凑（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），但必须标注"非原始财报，来自第三方汇总"，且关键数据两源误差>1%须标记。
+如果无法获取完整原文，按 `skills/financial-data.md` 规范使用标准数据源拼凑（SEC/IR 优先，StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 交叉验证），但必须标注"非原始财报，来自第三方汇总"，且关键数据两源误差>1%须标记。
 
 ### 第二步：核心财务数据提取与验证
 
@@ -65,8 +67,9 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 总收入及分业务/分地区收入拆解
 - 毛利润、毛利率变化
 - 经营利润、经营利润率变化（区分GAAP和Non-GAAP）
-- 净利润（注意非经常性损益的影响）
-- EPS（基本 vs 稀释）
+- 净利润（GAAP net income 与 Non-GAAP net income 分开，注意非经常性损益的影响）
+- EPS（basic EPS、diluted EPS、adjusted EPS 分开）
+- Segment revenue / operating income / margin
 
 #### 2.2 现金流表（巴菲特最看重）
 
@@ -78,6 +81,8 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 资本开支及其构成（维护性 vs 扩张性）
 - 自由现金流 = 经营现金流 - 资本开支
 - 回购金额、分红金额
+- SBC 金额、占收入比例、占 FCF 比例
+- diluted weighted average shares 与 shares outstanding，检查回购是否抵消稀释
 - 现金及等价物期末余额
 
 #### 2.3 资产负债表健康度
@@ -88,13 +93,14 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 应收账款周转天数变化（是否在放松信用条件冲收入？）
 - 存货周转天数变化（是否在积压？）
 - 商誉及无形资产占比（是否有减值风险？）
+- deferred revenue / RPO / ARR / NRR（SaaS、云、订阅公司必须检查）
 
 **数据验证**：使用 `tools/financial_rigor.py` 对关键数据进行校验：
 
 ```bash
 # 收入和净利润交叉验证（至少2个来源）
 python3 tools/financial_rigor.py cross-validate \
-  --metric "revenue" --values 108.3e9 107.9e9 --sources "公司财报" "Yahoo Finance"
+  --field revenue --values '{"10-Q": 108300, "StockAnalysis": 107900}' --unit "USD million"
 
 # 市值校验
 python3 tools/financial_rigor.py verify-market-cap \
@@ -138,6 +144,13 @@ python3 tools/financial_rigor.py verify-valuation \
 | 分析师问题 | 管理层回答 | 回答质量(1-5) | 是否回避 |
 |-----------|-----------|:------------:|:-------:|
 
+#### 3.4 Guidance 与美股关键口径
+
+| 项目 | 本期 guidance | 上次 guidance | 变化 | 管理层解释 |
+|------|--------------|--------------|------|-----------|
+
+必须判断 guidance 是保守、激进、含糊，还是通过 adjusted metrics 美化。对软件、云、半导体、生物医药等公司，必须检查行业专属前瞻指标。
+
 ### 第四步：附注与隐藏信息挖掘
 
 财报附注里藏着管理层不想让你轻易看到的信息：
@@ -146,10 +159,13 @@ python3 tools/financial_rigor.py verify-valuation \
 
 - [ ] **关联交易**：与大股东/关联方的交易条款是否公允？
 - [ ] **股权激励**：期权/RSU的稀释效应有多大？行权价是多少？
+- [ ] **SBC与稀释**：SBC 是否被 Non-GAAP 排除但真实侵蚀股东收益？
+- [ ] **回购有效性**：回购金额、平均回购价格、股本变化是否匹配？
 - [ ] **或有负债**：诉讼、担保、承诺等表外风险
 - [ ] **会计政策变更**：是否改变了收入确认方式、折旧年限等？
 - [ ] **分部信息**：不同业务的利润率差异，是否有"好业务补贴坏业务"
 - [ ] **客户/供应商集中度**：前五大客户/供应商占比
+- [ ] **10-K Risk Factors变化**：是否出现新的实质风险或措辞加重？
 
 #### 4.2 异常信号检测
 
@@ -158,6 +174,9 @@ python3 tools/financial_rigor.py verify-valuation \
 - [ ] 经营现金流 < 净利润且差距扩大（利润质量存疑）
 - [ ] 资本化开支突然增加（可能在美化利润）
 - [ ] 非经常性收益占比突然上升
+- [ ] Non-GAAP 与 GAAP 差距持续扩大
+- [ ] SBC 占收入或 FCF 比例持续上升
+- [ ] 回购金额很大但 diluted shares 没有下降
 
 ### 第五步：与历史数据对比
 
@@ -179,6 +198,26 @@ python3 tools/financial_rigor.py verify-valuation \
 | 指标 | 管理层此前指引 | 实际结果 | 偏差 | 解读 |
 |------|--------------|---------|------|------|
 
+### 第五步半：美股财报 15 项强制结构
+
+最终报告必须显式覆盖：
+
+1. 本季度/本财年核心结果
+2. Revenue growth by segment
+3. Gross margin / operating margin / net margin
+4. GAAP vs Non-GAAP reconciliation
+5. EPS quality
+6. Operating cash flow and FCF
+7. SBC and dilution
+8. Buyback and share count
+9. Balance sheet
+10. Guidance
+11. Management commentary
+12. Analyst Q&A key signals
+13. What changed vs previous thesis
+14. Bull case strengthened or weakened
+15. Bear case strengthened or weakened
+
 ### 第六步：输出精读报告
 
 #### 报告结构
@@ -186,11 +225,14 @@ python3 tools/financial_rigor.py verify-valuation \
 ```
 一、核心数据速览（一页表格）
 二、本期最重要的3个变化（不超过500字）
-三、管理层语气与承诺追踪
-四、附注中的隐藏信息
-五、关键问题（电话会Q&A精选）
-六、与投资论文的关系（如有持仓）
-七、结论：这份财报改变了什么？
+三、Revenue growth by segment
+四、GAAP vs Non-GAAP、EPS quality、SBC/dilution、buyback/share count
+五、管理层语气与承诺追踪
+六、附注中的隐藏信息
+七、关键问题（电话会Q&A精选）
+八、与投资论文的关系（如有持仓）
+九、Bull / Bear update
+十、结论：这份财报改变了什么？
 ```
 
 #### 结论必须明确回答
@@ -202,7 +244,7 @@ python3 tools/financial_rigor.py verify-valuation \
 
 ### 第七步：保存报告
 
-将报告写入 `reports/{公司名}-earnings-{期间}.md`，例如 `reports/腾讯-earnings-2025Q4.md`
+将报告写入 `reports/{ticker}-earnings-{期间}.md`，例如 `reports/AAPL-earnings-FY2026Q2.md`
 
 ### 第八步：数据抽检（准出流程）
 
@@ -213,7 +255,7 @@ python3 tools/financial_rigor.py verify-valuation \
 python3 ~/ai-berkshire/tools/report_audit.py extract \
   --report reports/{公司名}-earnings-{期间}.md
 
-# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+# Step 2 — 对清单每项从 SEC/IR 原始披露和可靠第三方源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
 python3 ~/ai-berkshire/tools/report_audit.py verdict \
@@ -229,4 +271,7 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 - **看变化，不看绝对值**：趋势比数字本身重要
 - **听语气，不只听内容**：管理层怎么说和说了什么一样重要
 - **查附注，不只看正文**：魔鬼藏在细节里
+- **分清GAAP和Non-GAAP**：adjusted metrics 不能替代真实利润
+- **检查SBC、回购和稀释**：回购不一定等于股东回报
+- **看分部经济性**：美股公司必须优先分析 segment revenue / operating income
 - **给结论，不做汇总**：精读的目的是形成判断，不是复述财报

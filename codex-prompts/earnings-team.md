@@ -1,5 +1,5 @@
 ---
-description: "AI Berkshire slash entry for 财报精读团队：四大师并行解读 + 公众号发布."
+description: "AI Berkshire slash entry for 财报精读团队：美股四大师并行解读 + 公众号发布."
 argument-hint: $ARGUMENTS
 ---
 
