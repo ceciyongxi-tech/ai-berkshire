@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 description: "AI Berkshire slash entry for 行业漏斗筛选：从美股市场到 3 家的价值投资精选流程."
+=======
+description: "AI Berkshire slash entry for 行业漏斗筛选：从全市场到 3 家的价值投资精选流程."
+>>>>>>> upstream/main
 argument-hint: $ARGUMENTS
 ---
 

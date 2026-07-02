@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 description: "AI Berkshire slash entry for 投研团队：美股四角色并行分析框架."
+=======
+description: "AI Berkshire slash entry for 投研团队：四角色并行分析框架."
+>>>>>>> upstream/main
 argument-hint: $ARGUMENTS
 ---
 

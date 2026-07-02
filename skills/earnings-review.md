@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 # 财报精读：美股一手资料深度解读
 
 对 $ARGUMENTS 进行美股财报精读分析。
 
 **强制输入**：company ticker、fiscal period、10-Q / 10-K / 8-K / earnings release / earnings call transcript。示例：`AAPL FY2026 Q2 10-Q 8-K transcript`、`MSFT FY2026 Q3 10-Q transcript`、`NVDA FY2026 Q1 earnings release transcript`。
+=======
+# 财报精读：一手资料深度解读
+
+对 $ARGUMENTS 进行财报精读分析。
+
+**支持输入格式**：`公司名 季度`，例如：`腾讯 2025Q4`、`PDD 2025年报`、`美团 最新`（默认读取最近一期）
+>>>>>>> upstream/main
 
 > "我从不看卖方研报，只读原始财报。" —— 李录
 >
@@ -17,7 +25,11 @@
 - 有时滞——等别人消化完，alpha已经没了
 - 缺乏语境——"收入增长15%"脱离了管理层对增长质量的讨论
 
+<<<<<<< HEAD
 本Skill直接解读一手资料，关注巴菲特和李录真正会看的内容。默认研究对象为美国上市公司，核心材料是 SEC EDGAR、公司 IR、10-K、10-Q、8-K、earnings release、earnings call transcript；第三方财务网站只用于交叉验证，不作为唯一来源。
+=======
+本Skill直接解读一手资料，关注巴菲特和李录真正会看的内容。
+>>>>>>> upstream/main
 
 ## 执行流程
 
@@ -25,12 +37,19 @@
 
 | 等级 | 特征 | 影响 |
 |------|------|------|
+<<<<<<< HEAD
 | A级 | 获取到完整原文（10-Q/10-K、8-K、earnings release、电话会纪要） | 正常执行全部步骤 |
 | B级 | 仅获取到部分原文或第三方汇总 | 标注"非原始来源"，降低附注和 Q&A 分析权重 |
 | C级 | 仅有新闻报道和数据网站摘要 | 聚焦核心财务数据变化，跳过附注挖掘，标注"一手资料不足" |
 
 同时识别公司类型：US domestic issuer / ADR / Foreign private issuer / REIT / Financial / SaaS / Cloud / Semiconductor / Consumer / Retail / Biotech / Pharma，并选择对应财报口径。
 
+=======
+| A级 | 获取到完整原文（10-K/年报/电话会纪要） | 正常执行全部步骤 |
+| B级 | 仅获取到部分原文或第三方汇总 | 标注"非原始来源"，降低附注分析权重 |
+| C级 | 仅有新闻报道和数据网站摘要 | 聚焦核心财务数据变化，跳过附注挖掘，标注"一手资料不足" |
+
+>>>>>>> upstream/main
 ### 第一步：获取一手资料
 
 使用 Task 工具启动多个后台 Agent **并行**获取以下原始材料：
@@ -82,7 +101,11 @@
 ```bash
 # 收入和净利润交叉验证（至少2个来源）
 python3 tools/financial_rigor.py cross-validate \
+<<<<<<< HEAD
   --field revenue --values '{"10-Q": 108300, "StockAnalysis": 107900}' --unit "USD million"
+=======
+  --metric "revenue" --values 108.3e9 107.9e9 --sources "公司财报" "Yahoo Finance"
+>>>>>>> upstream/main
 
 # 市值校验
 python3 tools/financial_rigor.py verify-market-cap \
@@ -126,6 +149,7 @@ python3 tools/financial_rigor.py verify-valuation \
 | 分析师问题 | 管理层回答 | 回答质量(1-5) | 是否回避 |
 |-----------|-----------|:------------:|:-------:|
 
+<<<<<<< HEAD
 #### 3.4 Guidance 与美股关键口径
 
 | 项目 | 本期 guidance | 上次 guidance | 变化 | 管理层解释 |
@@ -133,6 +157,8 @@ python3 tools/financial_rigor.py verify-valuation \
 
 必须判断 guidance 是保守、激进、含糊，还是通过 adjusted metrics 美化。对软件、云、半导体、生物医药等公司，必须检查行业专属前瞻指标。
 
+=======
+>>>>>>> upstream/main
 ### 第四步：附注与隐藏信息挖掘
 
 财报附注里藏着管理层不想让你轻易看到的信息：
@@ -141,8 +167,11 @@ python3 tools/financial_rigor.py verify-valuation \
 
 - [ ] **关联交易**：与大股东/关联方的交易条款是否公允？
 - [ ] **股权激励**：期权/RSU的稀释效应有多大？行权价是多少？
+<<<<<<< HEAD
 - [ ] **SBC与稀释**：SBC 是否被 Non-GAAP 排除但真实侵蚀股东收益？
 - [ ] **回购有效性**：回购金额、平均回购价格、股本变化是否匹配？
+=======
+>>>>>>> upstream/main
 - [ ] **或有负债**：诉讼、担保、承诺等表外风险
 - [ ] **会计政策变更**：是否改变了收入确认方式、折旧年限等？
 - [ ] **分部信息**：不同业务的利润率差异，是否有"好业务补贴坏业务"
@@ -176,6 +205,7 @@ python3 tools/financial_rigor.py verify-valuation \
 | 指标 | 管理层此前指引 | 实际结果 | 偏差 | 解读 |
 |------|--------------|---------|------|------|
 
+<<<<<<< HEAD
 ### 第五步半：美股财报 15 项强制结构
 
 最终报告必须显式覆盖：
@@ -196,6 +226,8 @@ python3 tools/financial_rigor.py verify-valuation \
 14. Bull case strengthened or weakened
 15. Bear case strengthened or weakened
 
+=======
+>>>>>>> upstream/main
 ### 第六步：输出精读报告
 
 #### 报告结构
@@ -203,6 +235,7 @@ python3 tools/financial_rigor.py verify-valuation \
 ```
 一、核心数据速览（一页表格）
 二、本期最重要的3个变化（不超过500字）
+<<<<<<< HEAD
 三、Revenue growth by segment
 四、GAAP vs Non-GAAP、EPS quality、SBC/dilution、buyback/share count
 五、管理层语气与承诺追踪
@@ -211,6 +244,13 @@ python3 tools/financial_rigor.py verify-valuation \
 八、与投资论文的关系（如有持仓）
 九、Bull / Bear update
 十、结论：这份财报改变了什么？
+=======
+三、管理层语气与承诺追踪
+四、附注中的隐藏信息
+五、关键问题（电话会Q&A精选）
+六、与投资论文的关系（如有持仓）
+七、结论：这份财报改变了什么？
+>>>>>>> upstream/main
 ```
 
 #### 结论必须明确回答
@@ -222,7 +262,11 @@ python3 tools/financial_rigor.py verify-valuation \
 
 ### 第七步：保存报告
 
+<<<<<<< HEAD
 将报告写入 `reports/{ticker}-earnings-{期间}.md`，例如 `reports/AAPL-earnings-FY2026Q2.md`
+=======
+将报告写入 `reports/{公司名}-earnings-{期间}.md`，例如 `reports/腾讯-earnings-2025Q4.md`
+>>>>>>> upstream/main
 
 ### 第八步：数据抽检（准出流程）
 
@@ -233,7 +277,11 @@ python3 tools/financial_rigor.py verify-valuation \
 python3 ~/ai-berkshire/tools/report_audit.py extract \
   --report reports/{公司名}-earnings-{期间}.md
 
+<<<<<<< HEAD
 # Step 2 — 对清单每项从 SEC/IR 原始披露和可靠第三方源取数（参见 skills/financial-data.md）
+=======
+# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+>>>>>>> upstream/main
 
 # Step 3 — 输出准出/打回判决
 python3 ~/ai-berkshire/tools/report_audit.py verdict \
@@ -249,7 +297,10 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 - **看变化，不看绝对值**：趋势比数字本身重要
 - **听语气，不只听内容**：管理层怎么说和说了什么一样重要
 - **查附注，不只看正文**：魔鬼藏在细节里
+<<<<<<< HEAD
 - **分清GAAP和Non-GAAP**：adjusted metrics 不能替代真实利润
 - **检查SBC、回购和稀释**：回购不一定等于股东回报
 - **看分部经济性**：美股公司必须优先分析 segment revenue / operating income
+=======
+>>>>>>> upstream/main
 - **给结论，不做汇总**：精读的目的是形成判断，不是复述财报

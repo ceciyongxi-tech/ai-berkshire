@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 # 财报精读团队：美股四大师并行解读 + 公众号发布
 
 对 $ARGUMENTS 进行团队化美股财报精读分析。四位大师并行解读 SEC/IR 一手资料，编辑润色成文，读者评审把关质量，最终产出可直接发布的公众号文章。
 
 **强制输入**：company ticker、fiscal period、10-Q / 10-K / 8-K / earnings release / earnings call transcript。示例：`AAPL FY2026 Q2 10-Q 8-K transcript`、`NVDA FY2026 Q1 earnings release transcript`。
+=======
+# 财报精读团队：四大师并行解读 + 公众号发布
+
+对 $ARGUMENTS 进行团队化财报精读分析。四位大师并行解读财报，编辑润色成文，读者评审把关质量，最终产出可直接发布的公众号文章。
+
+**支持输入格式**：`公司名 季度`，例如：`腾讯 2025Q4`、`PDD 2025年报`、`美团 最新`
+>>>>>>> upstream/main
 
 ## 设计理念
 
@@ -15,8 +23,11 @@
 - **阶段二·合成**：Team Lead 综合四个视角，产出研究报告初稿
 - **阶段三·发布**：编辑 Agent 改写为公众号文章 + 读者评审 Agent 提出修改意见 → Team Lead 定稿
 
+<<<<<<< HEAD
 默认数据源是 SEC EDGAR、公司 IR、10-K/10-Q/8-K、earnings release、earnings call transcript。StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 仅作交叉验证。禁止只用新闻或二手摘要。
 
+=======
+>>>>>>> upstream/main
 ---
 
 ## 阶段一：四大师并行研究
@@ -42,8 +53,11 @@
 
 将资料可得性评级告知每个 Agent，影响其分析深度。
 
+<<<<<<< HEAD
 同时识别公司类型：US domestic issuer / ADR / Foreign private issuer / REIT / Financial / SaaS / Cloud / Semiconductor / Consumer / Retail / Biotech / Pharma。不同类型必须采用对应财报口径：ADR/FPI 查 20-F/6-K/ADS ratio，金融看 NIM/CET1/loan loss provisions，REIT 看 FFO/AFFO/NOI，SaaS 看 ARR/NRR/RPO/deferred revenue/Rule of 40/SBC，半导体看 gross margin/inventory/export controls，生物医药看 pipeline/cash runway/FDA catalyst。
 
+=======
+>>>>>>> upstream/main
 ### 第二步：向用户展示团队框架
 
 | 阶段 | 角色 | 大师/定位 | 核心任务 |
@@ -74,7 +88,10 @@
    - 分业务/分地区收入，哪些在加速、哪些在减速
    - 不只是列数字——每个业务板块反映了什么商业逻辑
    - 收入增长来自"量"还是"价"？哪种更健康？
+<<<<<<< HEAD
    - 美股公司必须优先拆 segment revenue / operating income / margin
+=======
+>>>>>>> upstream/main
 
 2. **用户/客户价值变化**
    - DAU/MAU/付费用户等运营指标变化
@@ -111,11 +128,18 @@
    - 收入、毛利、经营利润、净利润——GAAP和Non-GAAP都要
    - GAAP vs Non-GAAP差异：差了多少、差在哪里、差距扩大还是缩小
    - 关键数据至少两个来源交叉验证
+<<<<<<< HEAD
    - 美股公司底稿必须检查 SBC、回购、稀释、股本变化、分部经济性
 
    ```bash
    python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
      --field revenue --values '{"10-Q": 数值, "StockAnalysis": 数值}' --unit "USD million"
+=======
+
+   ```bash
+   python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
+     --metric "revenue" --values {值1} {值2} --sources "来源1" "来源2"
+>>>>>>> upstream/main
    ```
 
 2. **现金流分析（最重要）**
@@ -123,7 +147,10 @@
    - 自由现金流 = 经营现金流 - 资本开支
    - 资本开支构成：维护性 vs 扩张性
    - 回购和分红金额
+<<<<<<< HEAD
    - diluted weighted average shares 与 shares outstanding 的变化
+=======
+>>>>>>> upstream/main
 
 3. **利润质量检验**
    - 应收账款增速 vs 收入增速
@@ -131,14 +158,20 @@
    - 经营现金流与净利润差距趋势
    - 资本化支出是否突然增加
    - 非经常性收益占比
+<<<<<<< HEAD
    - Non-GAAP 与 GAAP 差距是否持续扩大
    - SBC 是否被长期排除但股东实际承担稀释
+=======
+>>>>>>> upstream/main
 
 4. **资产负债表健康度**
    - 净现金/净负债变化
    - 应收账款/存货周转天数变化
    - 商誉及无形资产减值风险
+<<<<<<< HEAD
    - deferred revenue / RPO / ARR / NRR（SaaS、云、订阅公司必须检查）
+=======
+>>>>>>> upstream/main
 
 5. **估值与安全边际更新**
 
@@ -276,6 +309,7 @@
 ## 四、核心数据速览
 关键财务和运营指标表格（本期 vs 上期 vs 同比）
 
+<<<<<<< HEAD
 必须包含美股口径表：
 - Revenue growth by segment
 - Gross margin / operating margin / net margin
@@ -292,6 +326,8 @@
 - Bull case strengthened or weakened
 - Bear case strengthened or weakened
 
+=======
+>>>>>>> upstream/main
 ## 五、各视角深度分析
 每个视角3-5条最重要发现
 
@@ -306,7 +342,10 @@
 2. 投资论文影响：强化/无影响/削弱/破裂
 3. 下一个催化剂
 4. 操作建议
+<<<<<<< HEAD
 5. 数据是否足够形成结论？若不足，明确标注“数据不足”
+=======
+>>>>>>> upstream/main
 ```
 
 ---
@@ -426,6 +465,7 @@
 ## 输出文件
 
 ```
+<<<<<<< HEAD
 reports/{ticker}/
 ├── {ticker}-earnings-{期间}.md           ← 最终公众号文章（定稿）
 ├── {ticker}-earnings-{期间}-研究底稿.md   ← 四大师合成研究报告（自用）
@@ -434,6 +474,16 @@ reports/{ticker}/
 ├── {ticker}-earnings-{期间}-芒格.md       ← 竞争格局解读
 ├── {ticker}-earnings-{期间}-李录.md       ← 风险信号分析
 └── {ticker}-earnings-{期间}-读者评审.md   ← 读者评审报告
+=======
+reports/{公司名}/
+├── {公司名}-earnings-{期间}.md           ← 最终公众号文章（定稿）
+├── {公司名}-earnings-{期间}-研究底稿.md   ← 四大师合成研究报告（自用）
+├── {公司名}-earnings-{期间}-段永平.md     ← 生意本质解读
+├── {公司名}-earnings-{期间}-巴菲特.md     ← 财务质量审计
+├── {公司名}-earnings-{期间}-芒格.md       ← 竞争格局解读
+├── {公司名}-earnings-{期间}-李录.md       ← 风险信号分析
+└── {公司名}-earnings-{期间}-读者评审.md   ← 读者评审报告
+>>>>>>> upstream/main
 ```
 
 ## 数据抽检（准出流程）
@@ -442,15 +492,22 @@ reports/{ticker}/
 
 ```bash
 python3 ~/ai-berkshire/tools/report_audit.py extract \
+<<<<<<< HEAD
   --report reports/{ticker}/{ticker}-earnings-{期间}.md
+=======
+  --report reports/{公司名}/{公司名}-earnings-{期间}.md
+>>>>>>> upstream/main
 
 python3 ~/ai-berkshire/tools/report_audit.py verdict \
   --results '<填好的JSON>' \
   --report {报告文件名}
 ```
 
+<<<<<<< HEAD
 抽检取数必须优先 SEC/IR 原始披露，第三方来源只作交叉验证。
 
+=======
+>>>>>>> upstream/main
 **【准出】** 全部通过 → 可发布；**【打回】** 有不通过 → 修正后重审。
 
 ## 与现有 Skill 的关系
@@ -470,4 +527,8 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 - **反面检验贯穿全程**：每个积极发现都附带反面论据
 - **编辑不是降低专业度**：是让专业内容更易读，不是变成科普
 - **读者评审不是走过场**：真的站在读者角度挑毛病
+<<<<<<< HEAD
 - **数据准确性**：关键数据交叉验证，使用 financial_rigor.py 工具验算；美股公司优先 SEC/IR，并在底稿核对 GAAP / Non-GAAP、SBC、回购、稀释、分部经济性
+=======
+- **数据准确性**：关键数据交叉验证，使用 financial_rigor.py 工具验算
+>>>>>>> upstream/main

@@ -14,6 +14,7 @@ This skill is generated from `skills/financial-data.md` so Claude Code and Codex
 
 # 财务数据获取与交叉验证规范
 
+<<<<<<< HEAD
 本规范适用于所有涉及企业财务数据的研究。**AI Berkshire 默认研究对象为美股上市公司**，关键数据必须优先回到 SEC 原始披露和公司 IR，并至少用一个独立第三方来源交叉验证。误差 > 1% 必须标记并解释口径差异。
 
 ---
@@ -21,6 +22,15 @@ This skill is generated from `skills/financial-data.md` so Claude Code and Codex
 ## 默认数据源优先级：美股主线
 
 ### 1. 原始一手披露（最高优先级）
+=======
+本规范适用于所有涉及企业财务数据的研究。**每个关键数据必须来自两个独立来源，误差>1%须标记。**
+
+---
+
+## 数据源优先级
+
+### 美股（PDD、腾讯ADR、网易ADR等）
+>>>>>>> upstream/main
 
 | 优先级 | 来源 | URL | 获取方式 |
 |--------|------|-----|---------|
@@ -63,9 +73,34 @@ This skill is generated from `skills/financial-data.md` so Claude Code and Codex
 | 1% ~ 5% | ⚠️ 标记"数据存在差异"，注明两个数值，说明可能原因（汇率/会计口径） |
 | > 5% | ❌ 标记"数据存在重大差异"，必须查原始财报核实，不得直接使用 |
 
+<<<<<<< HEAD
 ---
 
 ## 常见差异原因
+=======
+### 第三步：数据呈现格式
+
+每个关键数据必须按以下格式标注：
+
+```
+收入：1,239亿元 ✅
+  - macrotrends: 1,241亿元
+  - stockanalysis: 1,237亿元
+  - 误差: 0.3%
+```
+
+差异示例：
+```
+净利润：245亿元 ⚠️ 数据存在差异
+  - macrotrends: 245亿元（GAAP）
+  - stockanalysis: 278亿元（Non-GAAP）
+  - 误差: 13.5% — 原因：会计口径不同（GAAP vs Non-GAAP）
+```
+
+---
+
+## 常见差异原因（不一定是数据错误）
+>>>>>>> upstream/main
 
 | 原因 | 说明 |
 |------|------|

@@ -1,6 +1,10 @@
 ---
 name: investment-team
+<<<<<<< HEAD
 description: "AI Berkshire skill: 投研团队：美股四角色并行分析框架. Source: skills/investment-team.md."
+=======
+description: "AI Berkshire skill: 投研团队：四角色并行分析框架. Source: skills/investment-team.md."
+>>>>>>> upstream/main
 ---
 
 ## Codex adapter note
@@ -12,9 +16,15 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
+<<<<<<< HEAD
 # 投研团队：美股四角色并行分析框架
 
 对 $ARGUMENTS 进行团队化美股投资研究分析。使用 Team 工具创建真正的多Agent并行研究团队。默认数据源为 SEC/IR 优先，StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 用于交叉验证；禁止只用新闻或二手摘要。
+=======
+# 投研团队：四角色并行分析框架
+
+对 $ARGUMENTS 进行团队化投资研究分析。使用 Team 工具创建真正的多Agent并行研究团队。
+>>>>>>> upstream/main
 
 ## 执行流程
 
@@ -25,10 +35,17 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 | 角色 | 职责 | 分析框架 |
 |------|------|----------|
 | **team-lead**（你自己） | 统筹协调、汇总研判、输出最终报告 | 四大师综合框架 |
+<<<<<<< HEAD
 | **business-analyst** | 商业模式、客户、定价权、产品替代性、网络效应、生态锁定 | 段永平视角 |
 | **financial-analyst** | 10-K/10-Q 财务拆解、GAAP vs Non-GAAP、SBC、回购、稀释、FCF质量、ROIC/FCF yield | 巴菲特视角 |
 | **industry-researcher** | 美股行业格局、竞争对手 filings、ETF holdings、市场规模、份额、增长、周期位置 | 芒格视角 |
 | **risk-assessor** | 10-K risk factors、监管、诉讼、DEF 14A薪酬、insider transactions、capital allocation、失败路径 | 李录视角 |
+=======
+| **business-analyst** | 商业模式 & 护城河分析 | 段永平视角 |
+| **financial-analyst** | 财务报表 & 估值分析 | 巴菲特视角 |
+| **industry-researcher** | 行业格局 & 竞争态势 | 芒格视角 |
+| **risk-assessor** | 风险评估 & 管理层研判 | 李录视角 |
+>>>>>>> upstream/main
 
 ### 第一步半：AI研究偏见评估
 
@@ -45,19 +62,25 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 将评级结果告知每个Agent，影响其研究方式。
 
+<<<<<<< HEAD
 同时识别美股公司类型并告知每个 Agent：US domestic issuer / ADR / Foreign private issuer / SPAC or de-SPAC / REIT / BDC / Bank / Insurance / Financial / SaaS / Cloud / Semiconductor / Consumer / Retail / Biotech / Pharma。不同类型必须采用对应财报口径和估值指标，例如 ADR/FPI 查 20-F/6-K/ADS ratio，金融看 NIM/CET1/ROE/loan loss provisions，REIT 看 FFO/AFFO/NOI/cap rate/debt maturity，SaaS 看 ARR/NRR/RPO/deferred revenue/Rule of 40/SBC，半导体看 gross margin/inventory/customer concentration/capex cycle/export controls，生物医药看 pipeline/cash runway/trial phase/FDA catalyst。
 
+=======
+>>>>>>> upstream/main
 ### 第二步：创建团队
 
 使用 TeamCreate 创建团队：
 - team_name: `{公司名}-research`（英文小写，如 `meituan-research`）
 - agent_type: `team-lead`
 
+<<<<<<< HEAD
 同时确定本次研究的统一输出目录：
 - `reports/{公司名}/`
 - 所有分报告和最终报告都必须写入该目录，禁止只写入 `~/` 根目录的单文件报告
 - 如果目录不存在，先创建目录
 
+=======
+>>>>>>> upstream/main
 ### 第三步：创建4个任务
 
 使用 TaskCreate 创建以下4个任务（每个都要有 subject、description、activeForm）：
@@ -65,6 +88,7 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 #### 任务1：商业模式分析
 - subject: `分析{公司名}商业模式、护城河与用户价值`
 - description 包含：
+<<<<<<< HEAD
   1. 商业模式本质：基于 10-K business section 定义核心生意、客户、产品和收入结构
   2. 平台/产品飞轮效应如何运转
   3. 护城河分析：品牌/转换成本/网络效应/规模效应/技术壁垒，逐一验证
@@ -75,6 +99,18 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 #### 任务2：财务与估值分析
 - subject: `分析{公司名}10-K/10-Q财务质量、GAAP/Non-GAAP、SBC、回购、稀释与估值`
+=======
+  1. 商业模式本质：核心生意定义、收入结构拆解
+  2. 平台/产品飞轮效应如何运转
+  3. 护城河分析：品牌/转换成本/网络效应/规模效应/技术壁垒，逐一验证
+  4. 用户/客户价值：为各方创造了什么独特价值
+  5. 业务矩阵与协同效应
+  6. 段永平"好生意"标准评估：差异化、定价权、可持续竞争优势
+  7. 要求搜索最新财报、行业报告等公开信息
+
+#### 任务2：财务与估值分析
+- subject: `分析{公司名}财务数据、盈利能力与估值`
+>>>>>>> upstream/main
 - description 包含：
   1. 近3-5年营收、净利润、经营利润趋势
   2. 盈利能力指标：ROE、ROA、毛利率、经营利润率
@@ -93,12 +129,20 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - subject: `分析{行业}行业格局与{公司名}竞争态势`
 - description 包含：
   1. 行业规模与增长：市场规模、增速、渗透率
+<<<<<<< HEAD
   2. 竞争格局：基于竞争对手 10-K/20-F/6-K、ETF holdings、industry lists 召回并交叉验证主要对手市场份额、竞争策略对比
+=======
+  2. 竞争格局：主要对手市场份额、竞争策略对比
+>>>>>>> upstream/main
   3. 核心竞争者威胁评估：逐个分析主要竞争对手
   4. 各细分赛道格局
   5. 行业趋势：技术变革、政策影响、新进入者
   6. 产业链分析：上中下游价值分配
+<<<<<<< HEAD
   7. 要求搜索最新行业数据和竞争动态；SaaS 检查 Rule of 40，硬件/半导体检查 inventory cycle，消费/零售检查库存和同店销售，金融/REIT 使用行业专属指标
+=======
+  7. 要求搜索最新行业数据和竞争动态
+>>>>>>> upstream/main
 
 #### 任务4：风险与管理层评估
 - subject: `评估{公司名}投资风险与管理层质量`
@@ -142,6 +186,7 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - 报告要详尽，使用Markdown表格呈现关键数据
 - 每个分析维度要有明确结论和评分
 - 报告末尾要有该维度的总体结论
+<<<<<<< HEAD
 - 除发送给 team-lead 外，必须将完整分报告写入统一输出目录：
   - business-analyst: `reports/{公司名}/01-商业模式分析-段永平视角.md`
   - financial-analyst: `reports/{公司名}/02-财务估值分析-巴菲特视角.md`
@@ -152,6 +197,12 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 1. 使用 TaskUpdate 将任务 #{任务编号} 标记为 completed
 2. 确认对应 Markdown 分报告已写入 `reports/{公司名}/`
 3. 通过 SendMessage 把完整分析报告发送给 team-lead（type: "message", recipient: "team-lead"）
+=======
+
+**完成后**：
+1. 使用 TaskUpdate 将任务 #{任务编号} 标记为 completed
+2. 通过 SendMessage 把完整分析报告发送给 team-lead（type: "message", recipient: "team-lead"）
+>>>>>>> upstream/main
 ```
 
 ### 第五步：接收报告并跟踪进度
@@ -182,8 +233,11 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 #### 3. 核心数据速览
 关键财务和经营指标表格（近2年对比）
 
+<<<<<<< HEAD
 必须额外包含美股口径表：SEC filing checklist、GAAP vs Non-GAAP table、SBC and dilution table、buyback effectiveness table、segment economics table。
 
+=======
+>>>>>>> upstream/main
 #### 4. 各维度分析摘要
 每个维度摘取3-5条最重要的发现
 
@@ -199,7 +253,10 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - 定性判断表（生意质量/管理层/估值/时机）
 - 分层操作建议表（激进型/稳健型/保守型 → 建议+价格区间）
 - 关键催化剂（加仓信号/减仓信号各3-5条）
+<<<<<<< HEAD
 - 最终评级必须落到：买入 / 观察 / 回避 / 数据不足
+=======
+>>>>>>> upstream/main
 
 #### 8. 总结段落
 100-200字的最终总结
@@ -208,6 +265,7 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 ### 第八步：保存报告
 
+<<<<<<< HEAD
 将完整最终报告写入 `reports/{公司名}/最终报告.md`。
 
 如需要保留带日期的归档副本，可额外写入 `reports/{公司名}/{公司名}投资研究报告_{日期}.md`（日期格式 YYYYMMDD），但不得替代上述五文件结构。
@@ -218,6 +276,9 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - `03-行业竞争分析-芒格视角.md`
 - `04-风险管理层评估-李录视角.md`
 - `最终报告.md`
+=======
+将完整最终报告写入 `~/{公司名}投资研究报告_{日期}.md`（日期格式 YYYYMMDD）。
+>>>>>>> upstream/main
 
 ### 第九步：数据抽检（准出流程）
 
@@ -226,7 +287,11 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 python3 ~/ai-berkshire/tools/report_audit.py extract \
   --report <报告文件路径>
 
+<<<<<<< HEAD
 # Step 2 — 对清单每项从 SEC/IR 原始披露和可靠第三方源取数（参见 skills/financial-data.md）
+=======
+# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+>>>>>>> upstream/main
 
 # Step 3 — 输出准出/打回判决
 python3 ~/ai-berkshire/tools/report_audit.py verdict \

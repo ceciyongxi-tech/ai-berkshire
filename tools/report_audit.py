@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
+<<<<<<< HEAD
 """AI Berkshire 报告数据抽检工具（Report Audit Tool）。
+=======
+"""Report Audit Tool for AI Berkshire.
+>>>>>>> upstream/main
 
 数据抽检工具：从研究报告中抽取15%的财务数据点，与可靠信源比对，
 通过则准出，不通过则打回并说明原因。
 
+<<<<<<< HEAD
 零外部依赖，仅使用 Python 标准库。
 要求 Python >= 3.7。
+=======
+Zero external dependencies — uses only Python stdlib.
+Requires Python >= 3.7.
+>>>>>>> upstream/main
 
 工作流程（三步）：
   Step 1 — 提取数据点，随机抽样15%：
@@ -410,14 +419,22 @@ def main():
 工作流程：
 
   Step 1 — 提取数据点并随机抽样 15%，输出抽检清单：
+<<<<<<< HEAD
     python3 tools/report_audit.py extract --report reports/MSFT-research-20260629.md
+=======
+    python3 tools/report_audit.py extract --report reports/腾讯/腾讯-research-20260408.md
+>>>>>>> upstream/main
 
   Step 2 — Claude 对清单中每个数据点，从可靠信源取数，
             填入 fetched_value / fetched_source / fetched_value2 / fetched_source2
 
   Step 3 — 输入核验结果，输出准出/打回判决：
     python3 tools/report_audit.py verdict --results '[
+<<<<<<< HEAD
       {"id":1,"label":"Revenue","reported_value":281700,"unit":"USD million","fetched_value":281700,"fetched_source":"SEC 10-K","fetched_value2":281700,"fetched_source2":"StockAnalysis"},
+=======
+      {"id":1,"label":"营业收入","reported_value":7518,"unit":"亿","fetched_value":7518,"fetched_source":"macrotrends","fetched_value2":7500,"fetched_source2":"stockanalysis"},
+>>>>>>> upstream/main
       ...
     ]'
 

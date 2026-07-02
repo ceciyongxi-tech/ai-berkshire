@@ -1,5 +1,10 @@
 English | [中文](README.md)
 
+<<<<<<< HEAD
+=======
+[![GitHub Trending](https://trendshift.io/api/badge/repositories/63696)](https://trendshift.io/repositories/63696)
+
+>>>>>>> upstream/main
 # AI Berkshire — Value Investing Research Framework for the AI Era
 
 > "Price is what you pay, value is what you get." — Warren Buffett
@@ -10,6 +15,11 @@ English | [中文](README.md)
 
 One person + Claude Code / Codex = an entire investment research team.
 
+<<<<<<< HEAD
+=======
+[Track Record](#real-track-record) · [Why Not Just Ask AI?](#why-cant-you-just-ask-ai-directly) · [Skills](#skills-overview-18-skills) · [Quick Start](#quick-start) · [Reports](#live-research-reports) · [Design Philosophy](#design-philosophy)
+
+>>>>>>> upstream/main
 ---
 
 ## Real Track Record
@@ -20,13 +30,21 @@ One person + Claude Code / Codex = an entire investment research team.
 
 <img src="assets/2024-returns.jpg" width="300" />
 
+<<<<<<< HEAD
 ### 2025 Year-to-Date Return: +66.38%
+=======
+### 2025 Full-Year Return: +66.38%
+>>>>>>> upstream/main
 
 <img src="assets/2025-returns.jpg" width="300" />
 
 ### Benchmark Comparison
 
+<<<<<<< HEAD
 | Benchmark | 2024 Full Year | 2025 YTD |
+=======
+| Benchmark | 2024 Full Year | 2025 Full Year |
+>>>>>>> upstream/main
 |-----------|---------------|----------|
 | **This Framework (Live)** | **+69.29%** | **+66.38%** |
 | Hang Seng Index | +17.67% | +27.77% |
@@ -163,7 +181,11 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 > Source: [`assets/architecture.mmd`](assets/architecture.mmd) (editable Mermaid diagram)
 
 **Three-Layer Design Philosophy**:
+<<<<<<< HEAD
 - **Skill Layer**: Abstracts "what you want to do" into 16 clear entry points — deep research, earnings analysis, industry screening, portfolio management, and thinking tools. Pick by scenario.
+=======
+- **Skill Layer**: Abstracts "what you want to do" into 18 clear entry points — deep research, earnings analysis, industry screening, portfolio management, and thinking tools. Pick by scenario.
+>>>>>>> upstream/main
 - **Agent Layer**: Each skill runs 4 Agents in parallel — they search independently, judge independently, challenge each other, and the Team Lead synthesizes.
 - **Tool Layer**: Exact-precision calculations, real-time web search, report auditing — ensures every report's data is rigorous and verifiable.
 
@@ -248,6 +270,21 @@ Windows users can use the official PowerShell installer: `powershell -ExecutionP
 
 If `codex --version` prints a version, you can continue with this project's Codex skills installation.
 
+<<<<<<< HEAD
+=======
+#### Reducing Approval Prompts
+
+These skills issue many tool calls, and Claude Code asks for approval for each one by default. That behavior comes from Claude Code's client-side permission system; it is not a repository default this project can change.
+
+If you trust the current workflow and are running in a trusted environment, start Claude Code in skip-permissions mode:
+
+```bash
+claude --dangerously-skip-permissions
+```
+
+Warning: this disables Claude Code's tool-approval guardrails. Use it only when you trust the repository, commands, and working directory.
+
+>>>>>>> upstream/main
 ### 2. Install Skills
 
 For Claude Code users:
@@ -308,7 +345,11 @@ Invoke directly in Claude Code:
 
 # Thinking Tools
 /dyp-ask Where is Pinduoduo's real moat?
+<<<<<<< HEAD
 /wechat-article Explain OPD for large language models
+=======
+/wechat-article Meituan
+>>>>>>> upstream/main
 ```
 
 After installing for Codex, restart Codex and refer to skills by name, for example:
@@ -318,7 +359,11 @@ Use investment-research to research Tencent
 Use earnings-review to analyze PDD 2025 annual results
 Use industry-funnel to screen AI compute
 Use bottleneck-hunter to scan AI infrastructure bottlenecks
+<<<<<<< HEAD
 Use wechat-article to write an OPD explainer for large language models
+=======
+Use wechat-article to write a Meituan investment article
+>>>>>>> upstream/main
 ```
 
 If you install Codex slash prompts, restart Codex and search for them in the `/` menu. Codex's official custom prompt entry point usually appears as `prompts:<name>`, for example:
@@ -650,6 +695,7 @@ The four masters aren't just dividing labor — they're designed to **challenge 
 
 ---
 
+<<<<<<< HEAD
 ## Roadmap
 
 - [x] Four-master comprehensive analysis framework (`/investment-research`)
@@ -666,6 +712,10 @@ The four masters aren't just dividing labor — they're designed to **challenge 
 - [x] Quality screen (`/quality-screen` — 7 hard metrics rapid elimination)
 - [x] Duan Yongping thinking simulator (`/dyp-ask`)
 - [x] Deep company series (`/deep-company-series` — 8-part, ~120K words)
+=======
+## Future Directions
+
+>>>>>>> upstream/main
 - [ ] Historical backtesting: AI research reports vs. actual stock price performance
 - [ ] Macroeconomic cycle analysis framework
 - [ ] Real-time data feeds via MCP (Wind / Bloomberg / Yahoo Finance)

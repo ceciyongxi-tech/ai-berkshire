@@ -1,5 +1,6 @@
 中文 | [English](README_EN.md)
 
+<<<<<<< HEAD
 # AI Berkshire - 面向美股的 AI 价值投资研究系统
 
 > "Price is what you pay, value is what you get." — Warren Buffett
@@ -10,6 +11,22 @@
 
 一个人 + Claude Code / Codex = 一个投研团队。
 
+=======
+[![GitHub Trending](https://trendshift.io/api/badge/repositories/63696)](https://trendshift.io/repositories/63696)
+
+# AI Berkshire - AI 时代的价值投资研究框架
+
+> "Price is what you pay, value is what you get." — Warren Buffett
+>
+> 用 AI 重新定义投资研究的深度与效率。
+
+**AI Berkshire** 是一套同时兼容 Claude Code 与 Codex 的投资研究 Skill 合集，将巴菲特、芒格、段永平、李录四位价值投资大师的方法论系统化、结构化，通过 AI Agent 实现专业级投资研究。
+
+一个人 + Claude Code / Codex = 一个投研团队。
+
+[实盘业绩](#real-track-record) · [为什么不能直接问AI](#为什么不能直接问-ai) · [Skills 一览](#skills-一览18个) · [快速开始](#快速开始) · [实战报告](#实战研究报告) · [设计理念](#设计理念)
+
+>>>>>>> upstream/main
 ---
 
 ## Real Track Record
@@ -20,13 +37,21 @@
 
 <img src="assets/2024-returns.jpg" width="300" />
 
+<<<<<<< HEAD
 ### 2025 年至今收益：+66.38%
+=======
+### 2025 全年收益：+66.38%
+>>>>>>> upstream/main
 
 <img src="assets/2025-returns.jpg" width="300" />
 
 ### 与主要指数对比
 
+<<<<<<< HEAD
 | 指标 | 2024 全年 | 2025 至今 |
+=======
+| 指标 | 2024 全年 | 2025 全年 |
+>>>>>>> upstream/main
 |------|----------|----------|
 | **本框架实盘** | **+69.29%** | **+66.38%** |
 | 恒生指数 | +17.67% | +27.77% |
@@ -101,8 +126,13 @@ LLM心算不可靠。PE算错一个小数点、市值单位搞混港币和人民
 ```bash
 # 市值手算校验：股价 × 总股本，与报告数据对比
 python3 tools/financial_rigor.py verify-market-cap \
+<<<<<<< HEAD
   --price 430 --shares 7.43e9 --reported 3.19e12 --currency USD
 # ✅ 使用 Decimal 精确十进制验算，避免单位和股本口径错误
+=======
+  --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
+# ✅ 验证通过, 偏差仅 0.08%
+>>>>>>> upstream/main
 ```
 
 所有计算使用 Python `decimal.Decimal`（精确十进制），不用 `float`。关键数据至少2个独立来源交叉验证。
@@ -162,12 +192,17 @@ AI Berkshire 确保：**同样的输入 → 结构一致、深度一致的输出
 > 图源：[`assets/architecture.mmd`](assets/architecture.mmd)（Mermaid 可编辑源码）
 
 **三层设计哲学**：
+<<<<<<< HEAD
 - **Skill 层**：把"你要做什么"抽象成 16 个明确入口——深度研究、财报分析、行业筛选、持仓管理、思维工具，按场景选用
+=======
+- **Skill 层**：把"你要做什么"抽象成 18 个明确入口——深度研究、财报分析、行业筛选、持仓管理、思维工具，按场景选用
+>>>>>>> upstream/main
 - **Agent 层**：每个 skill 内部都是 4 个 Agent 并行——它们各自独立搜索、独立判断、互相挑战，最后由 Team Lead 综合
 - **工具层**：精确计算、实时检索、报告抽检——保证每份报告的数据严谨性可验证
 
 ---
 
+<<<<<<< HEAD
 ## 目录与产物关系
 
 一句话理解：`skills/` 是“研究方法和指令”，`tools/` 是“计算和审计工具”，`reports/` 是“实际研究成果”，`codex-skills/` 和 `codex-prompts/` 是“把同一套方法适配给 Codex 使用的生成物”。
@@ -234,6 +269,8 @@ skills/deep-company-series.md
 
 ---
 
+=======
+>>>>>>> upstream/main
 ## Skills 一览（18个）
 
 ### 🔬 深度研究类
@@ -313,6 +350,21 @@ Windows 用户可使用官方 PowerShell 安装命令：`powershell -ExecutionPo
 
 如果 `codex --version` 能正常输出版本号，就可以继续安装本项目的 Codex skills。
 
+<<<<<<< HEAD
+=======
+#### 减少授权确认
+
+这些 skills 会频繁调用工具，Claude Code 默认会逐次请求授权确认。这个行为来自 Claude Code 客户端权限机制，不是本仓库可以修改的默认设置。
+
+如果你信任当前 workflow，并且在可信环境中运行，可以用 Claude Code 的跳过权限确认模式启动：
+
+```bash
+claude --dangerously-skip-permissions
+```
+
+注意：该模式会关闭 Claude Code 的工具审批保护，只应在你信任仓库、命令和工作目录的情况下使用。
+
+>>>>>>> upstream/main
 ### 2. 安装 Skills
 
 Claude Code 用户安装：
@@ -349,13 +401,19 @@ cd ai-berkshire
 
 ```bash
 # 深度研究
+<<<<<<< HEAD
 /investment-research Microsoft
 /investment-team NVIDIA
+=======
+/investment-research 腾讯
+/investment-team 美团
+>>>>>>> upstream/main
 /management-deep-dive 王兴 美团
 /private-company-research SpaceX
 /deep-company-series 拼多多
 
 # 财报分析
+<<<<<<< HEAD
 /earnings-review AAPL FY2026 Q2 10-Q 8-K transcript
 /earnings-team NVDA FY2026 Q1 earnings release transcript
 
@@ -374,11 +432,32 @@ cd ai-berkshire
 # 思维工具
 /dyp-ask Microsoft 的护城河到底在哪里？
 /wechat-article 大模型OPD技术解读
+=======
+/earnings-review 腾讯 2025Q4
+/earnings-team PDD 2025年报
+
+# 行业筛选
+/industry-research 核电
+/industry-funnel AI算力
+/quality-screen 恒生指数成分股
+/bottleneck-hunter AI基础设施
+/investment-checklist 茅台, 英伟达, 苹果
+
+# 持仓管理
+/portfolio-review 腾讯30%, 美团20%, 茅台20%, 现金30%
+/thesis-tracker 拼多多
+/news-pulse 腾讯
+
+# 思维工具
+/dyp-ask 拼多多的护城河到底在哪里？
+/wechat-article 美团
+>>>>>>> upstream/main
 ```
 
 在 Codex 中安装后重启 Codex，然后直接按 skill 名称描述任务，例如：
 
 ```text
+<<<<<<< HEAD
 使用 investment-research 研究 Microsoft
 使用 investment-team 研究 NVIDIA
 使用 earnings-review 分析 Apple 2026 Q2
@@ -386,12 +465,23 @@ cd ai-berkshire
 使用 thesis-tracker 跟踪 Amazon
 使用 bottleneck-hunter 扫描 AI基础设施瓶颈
 使用 wechat-article 写大模型OPD技术解读
+=======
+使用 investment-research 研究腾讯
+使用 earnings-review 分析 PDD 2025年报
+使用 industry-funnel 筛选 AI算力
+使用 bottleneck-hunter 扫描 AI基础设施瓶颈
+使用 wechat-article 写美团投研文章
+>>>>>>> upstream/main
 ```
 
 如果安装了 Codex slash prompts，重启 Codex 后也可以在 `/` 菜单里搜索这些 prompt。Codex 官方的 custom prompt 入口通常显示为 `prompts:<name>`，例如：
 
 ```text
+<<<<<<< HEAD
 /prompts:investment-research Microsoft
+=======
+/prompts:investment-research 腾讯
+>>>>>>> upstream/main
 ```
 
 ---
@@ -651,9 +741,15 @@ cd ai-berkshire
 调用方式：
 
 ```
+<<<<<<< HEAD
 /news-pulse NVDA
 /news-pulse MSFT 跌8% 一周内
 /news-pulse AMZN
+=======
+/news-pulse 腾讯
+/news-pulse 拼多多 跌12% 一周内
+/news-pulse 米哈游
+>>>>>>> upstream/main
 ```
 
 ---
@@ -715,6 +811,7 @@ cd ai-berkshire
 
 ---
 
+<<<<<<< HEAD
 ## 项目路线图
 
 - [x] 四大师综合分析框架（`/investment-research`）
@@ -731,6 +828,10 @@ cd ai-berkshire
 - [x] 去劣快速筛选（`/quality-screen` 7条硬指标排除）
 - [x] 段永平思维模拟（`/dyp-ask`）
 - [x] 深度系列长文（`/deep-company-series` 8篇12万字）
+=======
+## 未来方向
+
+>>>>>>> upstream/main
 - [ ] 历史回测：AI研报 vs 实际股价表现
 - [ ] 宏观经济周期分析框架
 - [ ] 基于MCP的实时数据接入（Wind/Bloomberg/Yahoo Finance）

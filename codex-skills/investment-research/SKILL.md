@@ -14,7 +14,11 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
 
+<<<<<<< HEAD
 对 $ARGUMENTS 进行系统化投资研究分析。默认研究对象为美股上市公司，优先使用 SEC 原始披露、公司 IR、10-K/10-Q/8-K、earnings call、DEF 14A / Proxy Statement 和第三方财务数据库交叉验证。报告继续用中文输出。
+=======
+对 $ARGUMENTS 进行系统化投资研究分析。
+>>>>>>> upstream/main
 
 ## 研究框架
 
@@ -56,7 +60,11 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 使用 Task 工具启动后台 Agent，从网络收集以下数据：
 
 1. 收入结构：最近财年及近4季度分部收入、增速、毛利率
+<<<<<<< HEAD
 2. 财务指标：近5年收入、GAAP净利润、Non-GAAP净利润、毛利率、经营利润率、经营现金流、自由现金流、现金储备
+=======
+2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备
+>>>>>>> upstream/main
 3. 竞争格局：市场份额、主要竞争对手对比
 4. 商业模式与护城河：核心竞争优势来源
 5. 技术能力：核心技术栈、研发投入
@@ -65,7 +73,10 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 8. 风险因素：地缘政治、监管、供应链等
 9. 当前估值：市值、PE、PS、PEG、EV/Revenue
 10. 多空双方核心论点
+<<<<<<< HEAD
 11. 美股必查：segment revenue / operating income、GAAP vs Non-GAAP、SBC、dilution、buybacks、debt/cash、RPO/deferred revenue/ARR/NRR（SaaS/云/订阅公司）
+=======
+>>>>>>> upstream/main
 
 #### 数据交叉验证（必须执行，使用金融严谨性工具）
 
@@ -89,7 +100,11 @@ python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
 Step 2 — 关键数据多源交叉验证：
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
+<<<<<<< HEAD
   --field {字段名} --values '{"10-K": 数值, "StockAnalysis": 数值}' --unit "USD million"
+=======
+  --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
+>>>>>>> upstream/main
 ```
 对收入、净利润、现金储备分别执行。
 
@@ -185,6 +200,7 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 - 与自身历史估值对比
 - 与同行估值对比
 
+<<<<<<< HEAD
 **按公司类型选择估值口径**：
 
 | 类型 | 主要估值指标 |
@@ -196,12 +212,15 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 | REIT | P/AFFO、implied cap rate、NOI、debt maturity |
 | 生物医药 | pipeline rNPV、cash runway、binary catalyst risk |
 
+=======
+>>>>>>> upstream/main
 **段永平式追问**：如果股市明天关闭5年，你愿意以这个价格持有吗？
 
 ### 第八步：综合决策备忘录
 
 汇总表格：
 
+<<<<<<< HEAD
 **美股披露与口径检查表（必须包含）**：
 
 | 检查项 | 结论 | 来源 |
@@ -214,6 +233,8 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 | Key shareholder questions | 股东最该追问的问题 | |
 | Bull / bear debate | 多空论点和证据 | |
 
+=======
+>>>>>>> upstream/main
 | 维度 | 结论 | 信心度 |
 |------|------|--------|
 | 生意质量（段永平） | | |
@@ -245,7 +266,10 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 7. **报告开头**必须包含"信息丰富度评级"（A/B/C）和"AI研究局限性声明"
 8. **报告结尾**必须区分"AI分析置信度"与"投资确定性"——前者取决于资料量，后者取决于生意本质。明确告知读者：本报告的哪些结论基于充分数据，哪些基于有限信息的推理
 9. 如果公司属于C级（信息稀缺），报告末尾必须列出"需要一手验证的问题清单"——建议读者通过田野调查、产品体验、供应链访谈等方式补充AI的盲区
+<<<<<<< HEAD
 10. 美股报告最终评级必须明确落到：买入 / 观察 / 回避 / 数据不足
+=======
+>>>>>>> upstream/main
 
 ## 数据抽检（准出流程）
 
