@@ -81,12 +81,11 @@ This skill is generated from `skills/industry-funnel.md` so Claude Code and Code
 
 | 市场 | 来源建议 |
 |------|---------|
-| 美股 | NYSE / NASDAQ / NYSE American |
-| ETF holdings | sector ETFs、thematic ETFs |
-| Filings 召回 | competitors mentioned in 10-K filings |
-| 行业筛选器 | StockAnalysis、Yahoo Finance、Nasdaq/NYSE lists、其他 industry screeners |
-| ADR | only if explicitly relevant |
-| 未上市公司 | 单列"未来 IPO 候选"小节，注明最新估值与潜在 IPO 时间；不作为可直接买入标的 |
+| A 股（沪深） | 同花顺/东方财富行业板块、通达信 |
+| 港股 | 富途/同花顺港股、HKEX 行业分类 |
+| 美股 | NASDAQ/NYSE 行业 ETF 持仓、Yahoo Finance |
+| 国际市场 | 日韩台欧的相关公司不能漏（特别是半导体、电子） |
+| 未上市公司 | 单列"未来 IPO 候选"小节，注明最新估值与潜在 IPO 时间 |
 
 ### 1.3 输出格式
 

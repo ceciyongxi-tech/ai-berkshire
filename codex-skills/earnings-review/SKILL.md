@@ -49,12 +49,12 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 
 使用 Task 工具启动多个后台 Agent **并行**获取以下原始材料：
 
-1. **财报原文**：从 SEC EDGAR、公司IR页面获取 10-Q / 10-K / 8-K；如涉及治理和薪酬，补充 DEF 14A
-2. **业绩电话会纪要/录音**：从公司IR页面、Seeking Alpha、Motley Fool、TIKR/Koyfin 等获取
+1. **财报原文**：从公司IR页面、SEC EDGAR（美股10-K/10-Q）、港交所披露易（港股）、巨潮资讯网（A股）获取
+2. **业绩电话会纪要/录音**：从 Seeking Alpha、公司IR页面、雪球等获取
 3. **管理层致股东信**（如有年报）：完整阅读
 4. **投资者日/分析师日材料**（如近期有）
 
-如果无法获取完整原文，按 `skills/financial-data.md` 规范使用标准数据源拼凑（SEC/IR 优先，StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 交叉验证），但必须标注"非原始财报，来自第三方汇总"，且关键数据两源误差>1%须标记。
+如果无法获取完整原文，按 `skills/financial-data.md` 规范使用标准数据源拼凑（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），但必须标注"非原始财报，来自第三方汇总"，且关键数据两源误差>1%须标记。
 
 ### 第二步：核心财务数据提取与验证
 
@@ -67,9 +67,8 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 总收入及分业务/分地区收入拆解
 - 毛利润、毛利率变化
 - 经营利润、经营利润率变化（区分GAAP和Non-GAAP）
-- 净利润（GAAP net income 与 Non-GAAP net income 分开，注意非经常性损益的影响）
-- EPS（basic EPS、diluted EPS、adjusted EPS 分开）
-- Segment revenue / operating income / margin
+- 净利润（注意非经常性损益的影响）
+- EPS（基本 vs 稀释）
 
 #### 2.2 现金流表（巴菲特最看重）
 
@@ -81,8 +80,6 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 资本开支及其构成（维护性 vs 扩张性）
 - 自由现金流 = 经营现金流 - 资本开支
 - 回购金额、分红金额
-- SBC 金额、占收入比例、占 FCF 比例
-- diluted weighted average shares 与 shares outstanding，检查回购是否抵消稀释
 - 现金及等价物期末余额
 
 #### 2.3 资产负债表健康度
@@ -93,7 +90,6 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 - 应收账款周转天数变化（是否在放松信用条件冲收入？）
 - 存货周转天数变化（是否在积压？）
 - 商誉及无形资产占比（是否有减值风险？）
-- deferred revenue / RPO / ARR / NRR（SaaS、云、订阅公司必须检查）
 
 **数据验证**：使用 `tools/financial_rigor.py` 对关键数据进行校验：
 
@@ -165,7 +161,6 @@ python3 tools/financial_rigor.py verify-valuation \
 - [ ] **会计政策变更**：是否改变了收入确认方式、折旧年限等？
 - [ ] **分部信息**：不同业务的利润率差异，是否有"好业务补贴坏业务"
 - [ ] **客户/供应商集中度**：前五大客户/供应商占比
-- [ ] **10-K Risk Factors变化**：是否出现新的实质风险或措辞加重？
 
 #### 4.2 异常信号检测
 
@@ -174,9 +169,6 @@ python3 tools/financial_rigor.py verify-valuation \
 - [ ] 经营现金流 < 净利润且差距扩大（利润质量存疑）
 - [ ] 资本化开支突然增加（可能在美化利润）
 - [ ] 非经常性收益占比突然上升
-- [ ] Non-GAAP 与 GAAP 差距持续扩大
-- [ ] SBC 占收入或 FCF 比例持续上升
-- [ ] 回购金额很大但 diluted shares 没有下降
 
 ### 第五步：与历史数据对比
 

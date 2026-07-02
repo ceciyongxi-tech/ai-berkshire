@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-"""Report Audit Tool for AI Berkshire.
+"""AI Berkshire 报告数据抽检工具（Report Audit Tool）。
 
 数据抽检工具：从研究报告中抽取15%的财务数据点，与可靠信源比对，
 通过则准出，不通过则打回并说明原因。
 
-Zero external dependencies — uses only Python stdlib.
-Requires Python >= 3.7.
+零外部依赖，仅使用 Python 标准库。
+要求 Python >= 3.7。
 
 工作流程（三步）：
   Step 1 — 提取数据点，随机抽样15%：
     python3 tools/report_audit.py extract --report reports/xxx.md
 
-  Step 2 — Claude 对抽检清单中的每个数据点，从 SEC EDGAR / company IR
-            一手披露和 StockAnalysis / Macrotrends / CompaniesMarketCap
-            等独立来源取数，填入 fetched_value
+  Step 2 — Claude 对抽检清单中的每个数据点，从可靠信源（macrotrends/
+            stockanalysis/aastocks/eastmoney）取数，填入 fetched_value
 
   Step 3 — 输入核验结果，输出准出/打回判决：
     python3 tools/report_audit.py verdict --results '[...]'
@@ -414,11 +413,7 @@ def main():
     python3 tools/report_audit.py extract --report reports/MSFT-research-20260629.md
 
   Step 2 — Claude 对清单中每个数据点，从可靠信源取数，
-            填入 fetched_value / fetched_source / fetched_value2 / fetched_source2。
-            美股默认主来源为 SEC EDGAR / company IR；StockAnalysis、
-            Macrotrends、CompaniesMarketCap 为交叉验证来源；Yahoo Finance、
-            Nasdaq、NYSE 用于 quote 和 market cap。
-            注意 GAAP vs Non-GAAP、SBC、share count、FCF 口径差异。
+            填入 fetched_value / fetched_source / fetched_value2 / fetched_source2
 
   Step 3 — 输入核验结果，输出准出/打回判决：
     python3 tools/report_audit.py verdict --results '[
@@ -478,10 +473,9 @@ def main():
             print(f'{p["id"]:>3}  {p["line_number"]:>5}  {p["label"][:35]:<35}  {p["reported_value"]:>12.2f}  {p["unit"]}')
         print()
         print('↑ 请对上述每个数据点，从以下信源取数，填入 fetched_value：')
-        print('  主来源：SEC EDGAR / company IR 原始披露（10-K、10-Q、8-K、earnings release）')
-        print('  交叉验证：StockAnalysis / Macrotrends / CompaniesMarketCap')
-        print('  Quote/市值：Yahoo Finance / Nasdaq / NYSE official quote pages')
-        print('  注意：GAAP vs Non-GAAP、SBC、share count、FCF 口径差异必须人工复核')
+        print('  美股：macrotrends.net（主）+ stockanalysis.com（副）')
+        print('  港股：aastocks.com（主）+ macrotrends ADR（副）')
+        print('  A股： eastmoney.com（主）+ cninfo.com.cn（副）')
         print()
 
         if not args.dry_run:

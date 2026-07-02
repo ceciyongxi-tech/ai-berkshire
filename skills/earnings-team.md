@@ -27,9 +27,8 @@
 
 | 资料类型 | 获取来源 | 优先级 |
 |---------|---------|--------|
-| 财报原文 | SEC EDGAR、公司IR页面（10-Q / 10-K / 8-K） | 最高 |
-| 业绩电话会纪要 | 公司IR页面、Seeking Alpha、Motley Fool、TIKR/Koyfin 等 | 最高 |
-| Proxy / 治理材料 | SEC EDGAR DEF 14A | 高（涉及薪酬/治理时） |
+| 财报原文 | 公司IR页面、SEC EDGAR（美股）、港交所披露易（港股）、巨潮资讯网（A股） | 最高 |
+| 业绩电话会纪要 | Seeking Alpha、公司IR页面、雪球 | 最高 |
 | 管理层致股东信 | 年报中提取 | 高（仅年报时） |
 | 上一期财报/电话会 | 同上 | 高（用于承诺追踪） |
 
@@ -111,9 +110,8 @@
 1. **核心财务数据提取与验证**
    - 收入、毛利、经营利润、净利润——GAAP和Non-GAAP都要
    - GAAP vs Non-GAAP差异：差了多少、差在哪里、差距扩大还是缩小
-   - EPS quality：basic EPS、diluted EPS、adjusted EPS 分开
-   - SBC、回购、稀释：SBC 占收入和 FCF，回购是否抵消 share count dilution
    - 关键数据至少两个来源交叉验证
+   - 美股公司底稿必须检查 SBC、回购、稀释、股本变化、分部经济性
 
    ```bash
    python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
@@ -216,8 +214,6 @@
    - 关联交易、股权激励稀释、或有负债
    - 会计政策变更、分部利润率差异
    - 客户/供应商集中度变化
-   - 10-K Risk Factors 是否出现新风险或措辞加重
-   - DEF 14A 薪酬指标是否鼓励 adjusted metrics 美化业绩
 
 4. **电话会Q&A精选**
    - 最尖锐的3-5个分析师问题及管理层回答质量评分
@@ -474,4 +470,4 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 - **反面检验贯穿全程**：每个积极发现都附带反面论据
 - **编辑不是降低专业度**：是让专业内容更易读，不是变成科普
 - **读者评审不是走过场**：真的站在读者角度挑毛病
-- **数据准确性**：关键数据交叉验证，使用 financial_rigor.py 工具验算
+- **数据准确性**：关键数据交叉验证，使用 financial_rigor.py 工具验算；美股公司优先 SEC/IR，并在底稿核对 GAAP / Non-GAAP、SBC、回购、稀释、分部经济性

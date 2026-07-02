@@ -100,8 +100,6 @@
 - 一句话描述（在产业链中的位置和作用）
 - 是否纯正标的（纯核电 vs 多元化中有核电业务）
 - 产业链所属环节
-- 美股披露质量：主要 10-K/10-Q/8-K/IR 来源是否完整
-- 财务质量快照：revenue growth、gross margin、FCF margin、ROIC、SBC/revenue、share count trend、net cash/leverage
 
 ### 输出格式
 按产业链环节分类，每个环节一张表，包含所有扫描到的公司。

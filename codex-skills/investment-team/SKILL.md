@@ -53,6 +53,11 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - team_name: `{公司名}-research`（英文小写，如 `meituan-research`）
 - agent_type: `team-lead`
 
+同时确定本次研究的统一输出目录：
+- `reports/{公司名}/`
+- 所有分报告和最终报告都必须写入该目录，禁止只写入 `~/` 根目录的单文件报告
+- 如果目录不存在，先创建目录
+
 ### 第三步：创建4个任务
 
 使用 TaskCreate 创建以下4个任务（每个都要有 subject、description、activeForm）：
@@ -71,14 +76,13 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 #### 任务2：财务与估值分析
 - subject: `分析{公司名}10-K/10-Q财务质量、GAAP/Non-GAAP、SBC、回购、稀释与估值`
 - description 包含：
-  1. 近3-5年营收、GAAP净利润、Non-GAAP净利润、经营利润趋势
-  2. 盈利能力指标：ROE、ROA、ROIC、毛利率、经营利润率、FCF margin
-  3. 现金流分析：经营性现金流、自由现金流、资本开支，核对 FCF = OCF - CapEx 口径
-  4. 资产负债表健康度：现金、短投、债务、净现金/净债务、流动性
-  5. GAAP vs Non-GAAP reconciliation、SBC、回购、股本稀释、diluted weighted average shares vs shares outstanding
-  6. 估值分析：成熟盈利公司看 P/E、EV/EBIT、EV/FCF、FCF yield、ROIC；高增长软件看 EV/Sales、Rule of 40、FCF margin、RPO growth、SBC-adjusted FCF；半导体看 cycle-normalized EPS、inventory cycle；金融/REIT/生物医药使用专属口径
-  7. 安全边际评估：内在价值 vs 当前股价
-  8. **金融严谨性验证（必须使用Bash调用工具，禁止心算）**：
+  1. 近3-5年营收、净利润、经营利润趋势
+  2. 盈利能力指标：ROE、ROA、毛利率、经营利润率
+  3. 现金流分析：经营性现金流、自由现金流、资本开支
+  4. 资产负债表健康度：现金储备、负债率、流动性
+  5. 估值分析：PE/PS/PB/EV等，与历史及同业对比
+  6. 安全边际评估：内在价值 vs 当前股价
+  7. **金融严谨性验证（必须使用Bash调用工具，禁止心算）**：
      - 市值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap --price {价格} --shares {股本} --reported {报告市值} --currency {币种}`
      - 估值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation --price {价格} --eps {EPS} --bvps {每股净资产}`
      - 关键数据交叉验证：`python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate --field {字段} --values '{JSON}' --unit {单位}`
@@ -100,16 +104,13 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - subject: `评估{公司名}投资风险与管理层质量`
 - description 包含：
   1. 管理层评估：CEO能力圈、诚信度、战略眼光、资本配置能力、历史决策质量
-  2. 10-K risk factors：新增、加重、措辞变化的实质风险
-  3. 监管风险：当前及潜在监管影响，包括反垄断、出口管制、数据隐私、FDA 或行业专属监管
-  4. 竞争风险：各竞争对手威胁程度评估
-  5. 业务风险：新业务亏损、扩张不确定性
-  6. 宏观风险：经济周期、行业周期影响
-  7. DEF 14A：管理层薪酬、绩效指标、股权激励、董事会独立性、股东利益一致性
-  8. Insider transactions 和 Form 4 仅作为辅助信号
-  9. 治理结构：股权结构、关联交易、股东回报政策
-  10. 长期确定性：10年后公司会怎样？什么可能颠覆其商业模式？
-  11. 要求搜索最新监管动态、管理层言论等
+  2. 监管风险：当前及潜在监管影响
+  3. 竞争风险：各竞争对手威胁程度评估
+  4. 业务风险：新业务亏损、扩张不确定性
+  5. 宏观风险：经济周期、行业周期影响
+  6. 治理结构：股权结构、关联交易、股东回报政策
+  7. 长期确定性：10年后公司会怎样？什么可能颠覆其商业模式？
+  8. 要求搜索最新监管动态、管理层言论等
 
 ### 第四步：启动4个并行Agent
 
@@ -132,10 +133,8 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 {任务description的内容}
 
 **研究方法**：
-- 使用 WebSearch 搜索最新公开信息，但默认顺序为 SEC EDGAR、公司 IR、10-K、10-Q、8-K、DEF 14A、earnings release、earnings call transcript
-- 第三方数据只作交叉验证：StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages
-- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行；GAAP 与 Non-GAAP、basic/diluted/adjusted EPS、diluted weighted average shares/shares outstanding 必须分开，两源误差>1%须标记
-- 禁止只用新闻、博客、券商摘要或二手数据库形成结论
+- 使用 WebSearch 搜索最新公开信息（财报、行业报告、新闻）
+- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），两源误差>1%须标记
 - 确保数据准确，关键数据标注来源
 - 分析要深入，不流于表面
 
@@ -143,10 +142,16 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 - 报告要详尽，使用Markdown表格呈现关键数据
 - 每个分析维度要有明确结论和评分
 - 报告末尾要有该维度的总体结论
+- 除发送给 team-lead 外，必须将完整分报告写入统一输出目录：
+  - business-analyst: `reports/{公司名}/01-商业模式分析-段永平视角.md`
+  - financial-analyst: `reports/{公司名}/02-财务估值分析-巴菲特视角.md`
+  - industry-researcher: `reports/{公司名}/03-行业竞争分析-芒格视角.md`
+  - risk-assessor: `reports/{公司名}/04-风险管理层评估-李录视角.md`
 
 **完成后**：
 1. 使用 TaskUpdate 将任务 #{任务编号} 标记为 completed
-2. 通过 SendMessage 把完整分析报告发送给 team-lead（type: "message", recipient: "team-lead"）
+2. 确认对应 Markdown 分报告已写入 `reports/{公司名}/`
+3. 通过 SendMessage 把完整分析报告发送给 team-lead（type: "message", recipient: "team-lead"）
 ```
 
 ### 第五步：接收报告并跟踪进度
@@ -203,7 +208,16 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 ### 第八步：保存报告
 
-将完整最终报告写入 `~/{公司名}投资研究报告_{日期}.md`（日期格式 YYYYMMDD）。
+将完整最终报告写入 `reports/{公司名}/最终报告.md`。
+
+如需要保留带日期的归档副本，可额外写入 `reports/{公司名}/{公司名}投资研究报告_{日期}.md`（日期格式 YYYYMMDD），但不得替代上述五文件结构。
+
+最终输出目录必须包含：
+- `01-商业模式分析-段永平视角.md`
+- `02-财务估值分析-巴菲特视角.md`
+- `03-行业竞争分析-芒格视角.md`
+- `04-风险管理层评估-李录视角.md`
+- `最终报告.md`
 
 ### 第九步：数据抽检（准出流程）
 
@@ -236,5 +250,3 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 6. **耐心等待**——4个Agent研究需要几分钟，实时向用户更新进度
 7. **反偏见意识**——team-lead在汇总时必须评估：各Agent的分析是否受限于资料充裕度？是否与市场共识过度趋同？最终报告需包含"信息丰富度评级"和"AI研究局限性声明"
 8. **信息稀缺时的诚实原则**——宁可在报告中留白标注"数据不足"，也不要用推测填满框架伪装确定性
-9. **美股披露优先**——所有 Agent 默认 SEC/IR 优先，StockAnalysis/Macrotrends/CompaniesMarketCap 辅助，禁止只用新闻或二手摘要
-10. **美股口径必查**——GAAP vs Non-GAAP、SBC、回购、稀释、segment economics、share count 是默认检查项

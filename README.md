@@ -94,9 +94,9 @@ AI最危险的不是给错答案，而是给一个**看起来很对但经不起�
 
 ### 4. 金融数据的精确性
 
-LLM心算不可靠。PE算错一个小数点、市值单位搞混 USD million 和 USD billion，就可能导致错误的投资决策。
+LLM心算不可靠。PE算错一个小数点、市值单位搞混港币和人民币，就可能导致错误的投资决策。
 
-**美股研究案例**：分析 Microsoft 时，不同来源可能混用 diluted weighted average shares、shares outstanding、USD million 和 USD billion。AI Berkshire 的处理方式：
+**真实案例**：分析腾讯时，不同来源的市值数据有"港币亿"和"人民币亿"两种单位。AI Berkshire 的处理方式：
 
 ```bash
 # 市值手算校验：股价 × 总股本，与报告数据对比
@@ -165,6 +165,72 @@ AI Berkshire 确保：**同样的输入 → 结构一致、深度一致的输出
 - **Skill 层**：把"你要做什么"抽象成 16 个明确入口——深度研究、财报分析、行业筛选、持仓管理、思维工具，按场景选用
 - **Agent 层**：每个 skill 内部都是 4 个 Agent 并行——它们各自独立搜索、独立判断、互相挑战，最后由 Team Lead 综合
 - **工具层**：精确计算、实时检索、报告抽检——保证每份报告的数据严谨性可验证
+
+---
+
+## 目录与产物关系
+
+一句话理解：`skills/` 是“研究方法和指令”，`tools/` 是“计算和审计工具”，`reports/` 是“实际研究成果”，`codex-skills/` 和 `codex-prompts/` 是“把同一套方法适配给 Codex 使用的生成物”。
+
+| 目录 | 作用 | 对应关系 | 例子 |
+|------|------|----------|------|
+| `skills/` | canonical workflow source，定义每个研究入口怎么做 | 修改这里后同步生成 Codex 产物 | `skills/investment-team.md` 定义四大师并行投研团队 |
+| `codex-skills/` | Codex skill 包，大多由 `skills/*.md` 生成 | `skills/investment-team.md` → `codex-skills/investment-team/SKILL.md` | Codex 安装后按 skill 名称调用 |
+| `codex-prompts/` | Codex slash prompt 兼容层 | `skills/investment-team.md` → `codex-prompts/investment-team.md` | 让 Codex 也能用类似 `/investment-team` 的入口 |
+| `tools/` | 财务计算、数据校验、报告抽检等共享工具 | 被多个 skill 调用 | `tools/financial_rigor.py`、`tools/report_audit.py` |
+| `reports/` | 研究报告、公众号文章、筛选池、跟踪记录 | 运行 skill 后的主要输出 | `reports/Accenture/最终报告.md`、`reports/Meta/《看懂Meta》/*.md` |
+| `scripts/` | 安装和同步脚本 | 把 `skills/` 同步到 Codex / Claude Code 入口 | `scripts/sync-codex-skills.py`、`scripts/install-codex-skills.sh` |
+| `assets/` | README 和文章用到的图片、图表素材 | 被 README 或报告引用 | `assets/architecture.mmd`、`assets/2024-returns.jpg` |
+
+核心链路：
+
+```text
+skills/*.md
+  ├─ scripts/sync-codex-skills.py  → codex-skills/*/SKILL.md
+  ├─ scripts/sync-codex-prompts.py → codex-prompts/*.md
+  └─ 运行对应 skill              → reports/ 里的研究成果
+```
+
+### Skills 与 Reports 的对应关系
+
+| Skill | 典型产物 | `reports/` 里的例子 |
+|-------|----------|---------------------|
+| [`/investment-team`](skills/investment-team.md) | 四个大师视角拆分报告 + 最终报告 | `reports/Accenture/01-商业模式分析-段永平视角.md`、`reports/Accenture/最终报告.md` |
+| [`/investment-research`](skills/investment-research.md) | 单文件公司深度研究 | `reports/Adobe/Adobe-research-20260607.md`、`reports/Google/Google-Alphabet投资研究报告-20260623.md` |
+| [`/deep-company-series`](skills/deep-company-series.md) | “看懂某公司”系列长文 | `reports/Accenture/《看懂埃森哲》/*.md`、`reports/Meta/《看懂Meta》/*.md` |
+| [`/earnings-review`](skills/earnings-review.md) | 单篇财报精读 | `reports/腾讯/腾讯-earnings-2025Q4.md`、`reports/拼多多/拼多多-earnings-2026Q1.md` |
+| [`/earnings-team`](skills/earnings-team.md) | 财报研究底稿、公众号版、读者评审 | `reports/腾讯/腾讯-earnings-2026Q1-研究底稿.md`、`reports/腾讯/腾讯-earnings-2026Q1-公众号版.md` |
+| [`/industry-research`](skills/industry-research.md) | 行业 / 产业链全景研究 | `reports/AI算力产业链全景研究-20260509.md`、`reports/AI产业研究/AI五层蛋糕-产业全景研究-20260605.md` |
+| [`/industry-funnel`](skills/industry-funnel.md) | 行业漏斗筛选报告 | `reports/AI算力-funnel-20260509.md`、`reports/AI应用-funnel-20260509.md` |
+| [`/bottleneck-hunter`](skills/bottleneck-hunter.md) | 瓶颈地图、观察名单、每日扫描 | `reports/bottleneck-map/master-map.md`、`reports/bottleneck-map/2026-06-09/19-30-POWL.md` |
+| [`/private-company-research`](skills/private-company-research.md) | 未上市公司研究 | `reports/思格新能-private-20260409.md`、`reports/蚂蚁数科/蚂蚁数科-private-20260511.md` |
+| [`/management-deep-dive`](skills/management-deep-dive.md) | 管理层深度研究 | `reports/腾讯/腾讯-management-20260409.md`、`reports/focus-media-management-20260624.md` |
+| [`/investment-checklist`](skills/investment-checklist.md) | 买入前 checklist / 多公司对比 | `reports/多公司对比-checklist-20260408.md`、`reports/美团/美团-checklist-20260411.md` |
+| [`/thesis-tracker`](skills/thesis-tracker.md) | 投资论文和后续跟踪记录 | `reports/腾讯/腾讯-thesis.md`、`reports/美团/美团-thesis.md` |
+| [`/portfolio-review`](skills/portfolio-review.md) | 组合复盘和持仓文件 | `reports/portfolio-latest.md` |
+| [`/news-pulse`](skills/news-pulse.md) | 股价异动 / 新闻脉搏归因 | `reports/腾讯/腾讯-news-20260501.md` |
+| [`/wechat-article`](skills/wechat-article.md) | 公众号文章定稿 | `reports/公众号-凯利公式-仓位管理的数学-20260616.md`、`reports/AI产业研究/公众号-AI五层蛋糕-框架篇-20260607.md` |
+| [`/financial-data`](skills/financial-data.md) | 数据源和交叉验证规范 | 不直接生成报告，被其他 skill 引用 |
+| [`/dyp-ask`](skills/dyp-ask.md) | 段永平式问答 / 思维工具 | 通常直接回答，也可沉淀为文章片段 |
+
+以 Accenture 为例：
+
+```text
+skills/investment-team.md
+  → reports/Accenture/
+     ├── 01-商业模式分析-段永平视角.md
+     ├── 02-财务估值分析-巴菲特视角.md
+     ├── 03-行业竞争分析-芒格视角.md
+     ├── 04-风险管理层评估-李录视角.md
+     └── 最终报告.md
+
+skills/deep-company-series.md
+  → reports/Accenture/《看懂埃森哲》/
+     ├── 01-开篇-全球最大IT咨询公司的真面目.md
+     ├── 02-商业模式-咨询加外包的双轮驱动.md
+     ├── 03-竞争与增长-AI时代的护城河攻防战.md
+     └── 04-风险与估值-14倍PE是恐慌还是理性.md
+```
 
 ---
 
@@ -329,19 +395,6 @@ cd ai-berkshire
 ```
 
 ---
-
-## 如何研究美股公司
-
-AI Berkshire 的默认研究流程是：
-
-1. 识别公司类型：US domestic issuer、ADR/FPI、REIT、Financial、SaaS/Cloud、Semiconductor、Consumer/Retail、Biotech/Pharma 等。
-2. 回到一手披露：优先查 SEC EDGAR、公司 IR、10-K、10-Q、8-K、DEF 14A、earnings release、earnings call transcript。
-3. 做口径检查：GAAP vs Non-GAAP、basic/diluted/adjusted EPS、diluted weighted average shares vs shares outstanding、SBC、回购、稀释、FCF、segment economics。
-4. 做交叉验证：用 StockAnalysis、Macrotrends、CompaniesMarketCap、Yahoo Finance、Nasdaq/NYSE quote pages 核对收入、净利润、股本、市值、现金、债务和估值。
-5. 套用四大师框架：段永平看生意本质，巴菲特看护城河和现金流，芒格做逆向风险，李录看长期文明趋势和永久性资本损失。
-6. 输出中文报告：结论必须落到 买入 / 观察 / 回避 / 数据不足，并保留数据来源和审计记录。
-
-非美股公司仍可研究，但属于例外路径，报告必须说明使用了哪套当地披露体系。
 
 ## 各 Skill 详细介绍
 
