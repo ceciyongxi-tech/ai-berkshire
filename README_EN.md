@@ -1,4 +1,4 @@
-English | [中文](README.md)
+English | [中文](README.md) | [日本語](README_JA.md)
 
 <<<<<<< HEAD
 =======
@@ -15,8 +15,6 @@ English | [中文](README.md)
 
 One person + Claude Code / Codex = an entire investment research team.
 
-<<<<<<< HEAD
-=======
 [Track Record](#real-track-record) · [Why Not Just Ask AI?](#why-cant-you-just-ask-ai-directly) · [Skills](#skills-overview-18-skills) · [Quick Start](#quick-start) · [Reports](#live-research-reports) · [Design Philosophy](#design-philosophy)
 
 >>>>>>> upstream/main
@@ -152,19 +150,9 @@ AI Berkshire ensures: **Same input → structurally consistent, equally deep out
 
 Ask AI directly, and you have one context window. Four parallel Agents means 4× the search volume, 4× the information sources, and 4 independent perspectives.
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   Team Lead (You)                        │
-│            Coordinate · Synthesize · Decide              │
-├──────────┬──────────┬──────────────┬───────────────┤
-│ Agent 1        │ Agent 2        │ Agent 3              │ Agent 4               │
-│ Business Model │ Financials     │ Industry &           │ Risk &                │
-│ Duan Yongping  │ Buffett        │ Competition          │ Management            │
-│                │                │ Munger               │ Li Lu                 │
-└──────────┴──────────┴──────────────┴───────────────┘
-         ↓ Parallel research, real-time progress ↓
-                  Final Synthesized Report
-```
+<p align="center">
+  <img src="assets/team-core-en.svg" alt="Team Lead orchestrating four master agents in parallel" width="720" />
+</p>
 
 ### In One Sentence
 
@@ -175,23 +163,18 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 ## Architecture
 
 <p align="center">
-  <img src="assets/architecture.png" alt="AI Berkshire Architecture" width="600" />
+  <img src="assets/architecture-en.svg" alt="AI Berkshire Architecture" width="760" />
 </p>
 
-> Source: [`assets/architecture.mmd`](assets/architecture.mmd) (editable Mermaid diagram)
 
 **Three-Layer Design Philosophy**:
-<<<<<<< HEAD
-- **Skill Layer**: Abstracts "what you want to do" into 16 clear entry points — deep research, earnings analysis, industry screening, portfolio management, and thinking tools. Pick by scenario.
-=======
 - **Skill Layer**: Abstracts "what you want to do" into 18 clear entry points — deep research, earnings analysis, industry screening, portfolio management, and thinking tools. Pick by scenario.
->>>>>>> upstream/main
 - **Agent Layer**: Each skill runs 4 Agents in parallel — they search independently, judge independently, challenge each other, and the Team Lead synthesizes.
 - **Tool Layer**: Exact-precision calculations, real-time web search, report auditing — ensures every report's data is rigorous and verifiable.
 
 ---
 
-## Skills Overview (18 Skills)
+## Skills Overview (19 Skills)
 
 ### 🔬 Deep Research
 
@@ -226,6 +209,7 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 |-------|---------|-------------|
 | [`/portfolio-review`](skills/portfolio-review.md) | Portfolio review & optimization | Graduate from "researching companies" to "managing a portfolio" — sizing, concentration, rebalancing |
 | [`/thesis-tracker`](skills/thesis-tracker.md) | Investment thesis tracker | Post-buy discipline system: continuously track whether your thesis has been falsified |
+| [`/thesis-drift`](skills/thesis-drift.md) | Investment thesis drift detection | Compare two theses/reports — separate factual, valuation, and wording changes |
 | [`/news-pulse`](skills/news-pulse.md) | Price-move rapid attribution | When a stock surges or drops — figure out "what happened" in 10 minutes |
 
 ### 🧠 Thinking Tools
@@ -240,6 +224,14 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 
 ## Quick Start
 
+### Cost & Model Selection
+
+Deep-research skills run multiple research passes, cross-source checks, and multi-agent synthesis by design, so they can consume a large number of tokens. That cost is part of getting fuller coverage across business quality, financials, industry structure, and risk.
+
+For high-stakes investment decisions, the maintainer's view is that the strongest model usually offers the best analysis ROI; saving model cost should not come at the expense of important judgment quality. Lighter models can be useful for triage, summarization, or low-risk questions, but moat, valuation, management, and risk synthesis should be expected to depend more heavily on model capability.
+
+To control cost, adjust the workflow before expecting a full deep-research run to become cheap: use [`/quality-screen`](skills/quality-screen.md) first to rule out weaker companies, or [`/news-pulse`](skills/news-pulse.md) for quick price-move attribution. Run [`/investment-research`](skills/investment-research.md) or [`/investment-team`](skills/investment-team.md) only when the result is worth deeper work.
+
 ### 1. Install an AI Client
 
 This repository keeps one canonical workflow and provides Claude Code commands plus Codex skills. Install the client you plan to use.
@@ -250,7 +242,7 @@ For Claude Code users:
 npm install -g @anthropic-ai/claude-code
 ```
 
-For Codex users:
+For Codex users on macOS / Linux:
 
 ```bash
 # macOS / Linux
@@ -287,7 +279,7 @@ Warning: this disables Claude Code's tool-approval guardrails. Use it only when 
 >>>>>>> upstream/main
 ### 2. Install Skills
 
-For Claude Code users:
+For Claude Code users on macOS / Linux:
 
 ```bash
 # Clone the repository
@@ -298,7 +290,15 @@ cd ai-berkshire
 ./scripts/install-claude-commands.sh
 ```
 
-For Codex users:
+For Claude Code users on Windows PowerShell / Command Prompt:
+
+```bat
+git clone https://github.com/xbtlin/ai-berkshire.git
+cd ai-berkshire
+.\scripts\install-claude-commands.bat
+```
+
+For Codex users on macOS / Linux:
 
 ```bash
 # Clone the repository
@@ -311,6 +311,17 @@ cd ai-berkshire
 # Optional: install Codex slash prompts to ~/.codex/prompts
 # for a Claude Code-like /investment-research entry point
 ./scripts/install-codex-prompts.sh
+```
+
+For Codex users on Windows PowerShell / Command Prompt:
+
+```bat
+git clone https://github.com/xbtlin/ai-berkshire.git
+cd ai-berkshire
+.\scripts\install-codex-skills.bat
+
+REM Optional: install Codex slash prompts
+.\scripts\install-codex-prompts.bat
 ```
 
 The repository maintains three entry points: `skills/*.md` are the Claude Code command sources; `codex-skills/*/SKILL.md` are Codex skill packages generated from `skills/*.md` by `scripts/sync-codex-skills.py`; `codex-prompts/*.md` are an optional Codex slash-prompt compatibility layer.
@@ -341,6 +352,7 @@ Invoke directly in Claude Code:
 # Portfolio Management
 /portfolio-review Tencent 30%, Meituan 20%, Moutai 20%, Cash 30%
 /thesis-tracker Pinduoduo
+/thesis-drift Pinduoduo reports/PDD-thesis-2025Q4.md reports/PDD-thesis-2026Q1.md
 /news-pulse Tencent
 
 # Thinking Tools
@@ -359,9 +371,6 @@ Use investment-research to research Tencent
 Use earnings-review to analyze PDD 2025 annual results
 Use industry-funnel to screen AI compute
 Use bottleneck-hunter to scan AI infrastructure bottlenecks
-<<<<<<< HEAD
-Use wechat-article to write an OPD explainer for large language models
-=======
 Use wechat-article to write a Meituan investment article
 >>>>>>> upstream/main
 ```
@@ -656,24 +665,11 @@ Usage:
 
 ### Four-Master Methodology Synthesis
 
-```
-              ┌──────────────────┐
-              │   Duan Yongping   │
-              │  "The Right Biz"  │
-              │  Business Essence │
-              └────────┬─────────┘
-                       │
-    ┌──────────────────┼──────────────────┐
-    │                  │                  │
-    ▼                  ▼                  ▼
-┌────────┐     ┌──────────┐      ┌────────┐
-│ Buffett │     │  Munger   │      │ Li Lu  │
-│  Moat   │     │ Inversion │      │ Civ.   │
-│ Margin  │     │ Risk List │      │ Trends │
-│  of     │     │  Bias     │      │Paradigm│
-│ Safety  │     │  Audit    │      │ Shift  │
-└────────┘     └──────────┘      └────────┘
-```
+**Duan Yongping · "The Right Business"** — business essence, the shared starting point for the other three lenses:
+
+| Buffett | Munger | Li Lu |
+|:---:|:---:|:---:|
+| Moat<br>Margin of safety<br>Management | Inversion<br>Risk list<br>Bias audit | Civilization trends<br>Paradigm shifts<br>Industry value |
 
 The four masters aren't just dividing labor — they're designed to **challenge each other**:
 - Duan Yongping says "great business" → Munger asks "how could it die?"

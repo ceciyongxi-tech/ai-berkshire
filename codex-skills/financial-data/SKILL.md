@@ -9,7 +9,8 @@ This skill is generated from `skills/financial-data.md` so Claude Code and Codex
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Prefer running commands from the repository root with paths like `python3 tools/financial_rigor.py ...`; if the current thread starts outside the repo, locate the actual checkout path first instead of assuming a fixed home-directory path.
+- Before starting research, run the `date` command to confirm today's date; treat it as the baseline for "latest" data and state the data cutoff date in the report header. Never assume the current date from training data.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 财务数据获取与交叉验证规范
@@ -117,6 +118,26 @@ This skill is generated from `skills/financial-data.md` so Claude Code and Codex
 1. **未上市公司**（米哈游、莉莉丝等）：只有一手数据来源时，数据前标记 `[估计]`，不执行交叉验证
 2. **季度数据 vs 年度数据**：优先使用年度数据做交叉验证，季度数据部分来源可能有滞后
 3. **原始财报优先**：若两个来源均与原始财报（10-K/年报PDF）不符，以原始财报为准，标记来源错误
+
+---
+
+## 股价与复权（历史序列必读）
+
+价格有三种口径，混用会让历史股价位置、长期涨幅、历史估值分位全部失真：
+
+| 口径 | 含义 | 用途 |
+|------|------|------|
+| 不复权 | 实际成交价，除权除息日跳空 | 仅用于"当前时点"快照 |
+| 前复权 | 以最新价为基准回调历史价 | 历史股价对比、N年涨幅、历史PE band 一律用它 |
+| 后复权 | 以上市首日为基准前推 | 计算历史总回报/年化收益 |
+
+规则：
+
+1. 涉及历史价格的分析统一用**前复权**，且同一分析内**不得混用**复权与不复权来源。
+2. 当前市值/当前PE 用**当前实际股价 × 当前总股本**即可，与复权无关——复权只影响历史序列。
+3. 跨越拆股/大比例送转的每股指标（历史EPS、历史股价），必须复权还原后再同比。
+4. 总回报/年化收益需计入分红（后复权已含），只看价格涨幅会低估。
+5. 增发/回购后市值验算以最新总股本为准（`financial_rigor.py verify-market-cap` 偏差>5% 会提示核对）。
 
 ---
 
