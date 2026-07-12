@@ -12,11 +12,7 @@ Usage (called automatically by Skills, no manual execution needed):
     python3 tools/financial_rigor.py verify-valuation --price 510 --eps 23.5 --bvps 120 --fcf-per-share 18 --dividend 2.4
     python3 tools/financial_rigor.py cross-validate --field revenue --values '{"年报": 7518, "Yahoo": 7500, "StockAnalysis": 7520}' --unit 亿
     python3 tools/financial_rigor.py benford --values '[1234, 2345, 3456, ...]'
-<<<<<<< HEAD
-    python3 tools/financial_rigor.py calc --expr '430 * 15.4e9'
-=======
     python3 tools/financial_rigor.py calc --expr '510 * 9.11e9'
->>>>>>> upstream/main
 """
 
 import argparse
@@ -84,11 +80,7 @@ def verify_market_cap(price, shares, reported_cap, currency=""):
     if deviation > 5:
         print(f"  ❌ 警告: 偏差 {deviation:.1f}% > 5%, 请检查:")
         print(f"     - 股本是否为最新（回购/增发）?")
-<<<<<<< HEAD
-        print(f"     - 单位是否一致（USD / million / billion / trillion）?")
-=======
-        print(f"     - 单位是否一致（港币 vs 人民币 vs 美元）?")
->>>>>>> upstream/main
+        print(f"     - 单位是否一致（币种 / million / billion / trillion）?")
         print(f"     - 股价是否为最新?")
         return False
     elif deviation > 1:
@@ -382,11 +374,7 @@ Examples:
   %(prog)s verify-valuation --price 510 --eps 23.5 --bvps 120
   %(prog)s cross-validate --field revenue --values '{"年报": 7518, "Yahoo": 7500}' --unit 亿
   %(prog)s benford --values '[1234, 2345, 3456, ...]'
-<<<<<<< HEAD
-  %(prog)s calc --expr '430 * 15.4e9'
-=======
   %(prog)s calc --expr '510 * 9.11e9'
->>>>>>> upstream/main
         """)
 
     sub = parser.add_subparsers(dest="command")
