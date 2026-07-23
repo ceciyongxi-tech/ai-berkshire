@@ -1,0 +1,162 @@
+[
+  {
+    "id": 4,
+    "label": "等价 B 股股本 · 口径与判断",
+    "reported_value": 1437903.0,
+    "unit": "",
+    "fetched_value": 1437903.0,
+    "fetched_source": "Berkshire 2026Q1 10-Q",
+    "fetched_value2": 1437903.0,
+    "fetched_source2": "Berkshire 2026Q1 earnings release"
+  },
+  {
+    "id": 5,
+    "label": "市值 · 数值",
+    "reported_value": 1.056,
+    "unit": "万亿",
+    "fetched_value": 1.05,
+    "fetched_source": "StockAnalysis",
+    "fetched_value2": 1.058,
+    "fetched_source2": "CompaniesMarketCap"
+  },
+  {
+    "id": 12,
+    "label": "TTM 收入 · 数值",
+    "reported_value": 3753.94,
+    "unit": "亿",
+    "fetched_value": 3753.94,
+    "fetched_source": "Macrotrends",
+    "fetched_value2": 3753.94,
+    "fetched_source2": "StockAnalysis"
+  },
+  {
+    "id": 14,
+    "label": "TTM GAAP 净利润 · 数值",
+    "reported_value": 724.71,
+    "unit": "亿",
+    "fetched_value": 724.71,
+    "fetched_source": "Berkshire 10-K/10-Q roll-forward",
+    "fetched_value2": 724.71,
+    "fetched_source2": "StockAnalysis"
+  },
+  {
+    "id": 15,
+    "label": "TTM 经营利润 · 数值",
+    "reported_value": 461.91,
+    "unit": "亿",
+    "fetched_value": 461.91,
+    "fetched_source": "Berkshire earnings releases roll-forward",
+    "fetched_value2": 461.91,
+    "fetched_source2": "financial_rigor.py exact calculation"
+  },
+  {
+    "id": 18,
+    "label": "保险承保 · 占比",
+    "reported_value": 16.3,
+    "unit": "%",
+    "fetched_value": 16.315,
+    "fetched_source": "Berkshire 2025 Annual Report",
+    "fetched_value2": 16.315,
+    "fetched_source2": "financial_rigor.py exact calculation"
+  },
+  {
+    "id": 28,
+    "label": "BHE 能源 · 2026Q1",
+    "reported_value": 11.14,
+    "unit": "",
+    "fetched_value": 11.14,
+    "fetched_source": "Berkshire 2026Q1 earnings release",
+    "fetched_value2": 11.14,
+    "fetched_source2": "Berkshire 2026Q1 10-Q"
+  },
+  {
+    "id": 29,
+    "label": "制造、服务与零售 · 2025",
+    "reported_value": 136.47,
+    "unit": "",
+    "fetched_value": 136.47,
+    "fetched_source": "Berkshire 2025 Annual Report",
+    "fetched_value2": 136.47,
+    "fetched_source2": "Berkshire FY2025 earnings release"
+  },
+  {
+    "id": 32,
+    "label": "其他 · 2025",
+    "reported_value": 16.13,
+    "unit": "",
+    "fetched_value": 16.13,
+    "fetched_source": "Berkshire 2025 Annual Report",
+    "fetched_value2": 16.13,
+    "fetched_source2": "Berkshire FY2025 earnings release"
+  },
+  {
+    "id": 36,
+    "label": "经营利润合计 · 占比",
+    "reported_value": 100.0,
+    "unit": "%",
+    "fetched_value": 100.0,
+    "fetched_source": "Berkshire operating earnings components",
+    "fetched_value2": 100.0,
+    "fetched_source2": "financial_rigor.py exact calculation"
+  },
+  {
+    "id": 55,
+    "label": "BHE 受监管资产 · 评分",
+    "reported_value": 4.0,
+    "unit": "",
+    "fetched_value": 4.0,
+    "fetched_source": "Analyst judgment based on 2025 10-K",
+    "fetched_value2": 4.0,
+    "fetched_source2": "Report scoring rubric"
+  },
+  {
+    "id": 70,
+    "label": "TTM GAAP P/E · 当前值",
+    "reported_value": 14.57,
+    "unit": "x",
+    "fetched_value": 14.57,
+    "fetched_source": "financial_rigor.py",
+    "fetched_value2": 14.56,
+    "fetched_source2": "StockAnalysis"
+  },
+  {
+    "id": 76,
+    "label": "1.40x · 对应价格",
+    "reported_value": 472.0,
+    "unit": "",
+    "fetched_value": 472.01,
+    "fetched_source": "financial_rigor.py",
+    "fetched_value2": 472.01,
+    "fetched_source2": "Q1 book value per share multiplied by 1.40"
+  },
+  {
+    "id": 82,
+    "label": "悲观 · 估值/股",
+    "reported_value": 419.0,
+    "unit": "",
+    "fetched_value": 419.34,
+    "fetched_source": "financial_rigor.py",
+    "fetched_value2": 419.34,
+    "fetched_source2": "Two-column model recomputation"
+  },
+  {
+    "id": 87,
+    "label": "乐观 · 经营业务倍数",
+    "reported_value": 20.0,
+    "unit": "x",
+    "fetched_value": 20.0,
+    "fetched_source": "Scenario assumption",
+    "fetched_value2": 20.0,
+    "fetched_source2": "Report valuation table"
+  },
+  {
+    "id": 95,
+    "label": "中性 · 三年目标价",
+    "reported_value": 561.0,
+    "unit": "",
+    "fetched_value": 561.1,
+    "fetched_source": "financial_rigor.py three-scenario",
+    "fetched_value2": 561.1,
+    "fetched_source2": "Independent scenario recomputation"
+  }
+]

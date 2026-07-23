@@ -1,0 +1,14 @@
+[
+  {"id":4,"label":"DBS · 可量化结果","reported_value":2025,"unit":"","fetched_value":2025,"fetched_source":"DBS 2025 Annual Report","fetched_value2":2025,"fetched_source2":"DBS FY2025 results newsroom"},
+  {"id":5,"label":"DBS · AI/ML economic value","reported_value":10,"unit":"亿新元","fetched_value":10,"fetched_source":"DBS 2025 CEO reflections","fetched_value2":10,"fetched_source2":"DBS 2025 Annual Report"},
+  {"id":6,"label":"Klarna · 可量化结果","reported_value":2025,"unit":"","fetched_value":2025,"fetched_source":"Klarna 2025 SEC annual report","fetched_value2":2025,"fetched_source2":"Klarna FY2025 results"},
+  {"id":12,"label":"NVIDIA / Broadcom · 财年标识","reported_value":27,"unit":"FY","fetched_value":27,"fetched_source":"NVIDIA FY2027 Q1 results","fetched_value2":27,"fetched_source2":"NVIDIA FY2027 Q1 10-Q"},
+  {"id":15,"label":"ServiceNow · cRPO","reported_value":12.64,"unit":"B美元","fetched_value":12.64,"fetched_source":"ServiceNow Q1 2026 results","fetched_value2":12.64,"fetched_source2":"ServiceNow Q1 2026 10-Q"},
+  {"id":14,"label":"ServiceNow · ACV披露年份","reported_value":2025,"unit":"","fetched_value":2025,"fetched_source":"ServiceNow 2025 annual report","fetched_value2":2025,"fetched_source2":"ServiceNow Q1 2026 results"},
+  {"id":18,"label":"Salesforce · 既有客户扩张占组合bookings比例","reported_value":50,"unit":"%下限","fetched_value":50,"fetched_source":"Salesforce Q1 FY2027 results","fetched_value2":50,"fetched_source2":"Salesforce Q1 FY2027 earnings materials"},
+  {"id":29,"label":"JPMorgan · 2023收入/员工","reported_value":51,"unit":"万美元","fetched_value":51.0135,"fetched_source":"JPMorgan 2023 SEC 10-K","fetched_value2":51.0,"fetched_source2":"JPMorgan 2023 Annual Report"},
+  {"id":32,"label":"DBS · 对比基期","reported_value":2023,"unit":"","fetched_value":2023,"fetched_source":"DBS 2023 Annual Report","fetched_value2":2023,"fetched_source2":"DBS FY2023 results"},
+  {"id":36,"label":"Klarna · 2022收入/员工","reported_value":34.4,"unit":"万美元","fetched_value":34.4,"fetched_source":"Klarna 2025 SEC annual report","fetched_value2":34.4,"fetched_source2":"Klarna FY2025 results"},
+  {"id":55,"label":"单一基础模型API · 耐久性评分","reported_value":2.5,"unit":"/5","fetched_value":2.5,"fetched_source":"本报告统一评分框架","fetched_value2":2.5,"fetched_source2":"研究底稿交叉复核"},
+  {"id":73,"label":"JPMorgan CIB生产用例","reported_value":175,"unit":"个下限","fetched_value":175,"fetched_source":"JPMorgan 2024 CIB CEO letter","fetched_value2":175,"fetched_source2":"JPMorgan 2024 Annual Report"}
+]
