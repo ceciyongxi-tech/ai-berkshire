@@ -26,7 +26,7 @@
 
 > 📮 **仓库是全量框架，公众号是精选。** 真正值得深研的公司，加上报告之外我自己的判断与取舍，都在微信公众号「**复利炼丹炉**」——[扫码关注 ↓](#精选研究首发于公众号)
 
-[实盘业绩](#real-track-record) · [为什么不能直接问AI](#为什么不能直接问-ai) · [Skills 一览](#skills-一览19个) · [快速开始](#快速开始) · [实战报告](#实战研究报告) · [设计理念](#设计理念) · [公众号](#精选研究首发于公众号)
+[实盘业绩](#real-track-record) · [为什么不能直接问AI](#为什么不能直接问-ai) · [Skills 一览](#skills-一览20个) · [快速开始](#快速开始) · [实战报告](#实战研究报告) · [设计理念](#设计理念) · [公众号](#精选研究首发于公众号)
 
 >>>>>>> upstream/main
 ---
@@ -231,6 +231,7 @@ AI Berkshire 确保：**同样的输入 → 结构一致、深度一致的输出
 
 | Skill | 用途 | 适合场景 |
 |-------|------|---------|
+| [`/income-investment`](skills/income-investment.md) | 收益型股票分析 | 区分可持续收益、机会型高息与收益率陷阱 |
 | [`/portfolio-review`](skills/portfolio-review.md) | 组合管理与优化 | 从"研究公司"升级到"管理组合"——仓位、集中度、再平衡 |
 | [`/thesis-tracker`](skills/thesis-tracker.md) | 投资论文追踪 | 买入后的纪律系统：持续跟踪论文是否被证伪 |
 | [`/thesis-drift`](skills/thesis-drift.md) | 投资论文漂移检测 | 对比两份论文/报告，区分事实变化、估值变化与措辞变化 |
@@ -399,6 +400,7 @@ REM 可选：安装 Codex slash prompts
 /investment-checklist 茅台, 英伟达, 苹果
 
 # 持仓管理
+/income-investment Verizon mode=existing role=core-income quantity=100 cost_basis=39.50 tax_residence=France horizon=5y
 /portfolio-review 腾讯30%, 美团20%, 茅台20%, 现金30%
 /thesis-tracker 拼多多
 /thesis-drift 拼多多 reports/拼多多-thesis-2025Q4.md reports/拼多多-thesis-2026Q1.md
@@ -803,4 +805,9 @@ MIT License
 
 如果这个项目对你有帮助，请给一个 Star 支持！精选公司研究与个人判断首发于微信公众号「**复利炼丹炉**」（二维码见[文首](#精选研究首发于公众号)）。
 
-[![Star History Chart](https://api.star-history.com/svg?repos=xbtlin/ai-berkshire&type=Date)](https://star-history.com/#xbtlin/ai-berkshire&Date)
+<a href="https://github.com/xbtlin/ai-berkshire/stargazers">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/star-history-dark.svg">
+    <img alt="Star History Chart" src="assets/star-history.svg">
+  </picture>
+</a>

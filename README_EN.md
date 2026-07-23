@@ -174,7 +174,7 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 
 ---
 
-## Skills Overview (19 Skills)
+## Skills Overview (20 Skills)
 
 ### 🔬 Deep Research
 
@@ -207,6 +207,7 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 
 | Skill | Purpose | When to Use |
 |-------|---------|-------------|
+| [`/income-investment`](skills/income-investment.md) | Income-centered equity analysis | Distinguish durable income, opportunistic yield, and yield traps |
 | [`/portfolio-review`](skills/portfolio-review.md) | Portfolio review & optimization | Graduate from "researching companies" to "managing a portfolio" — sizing, concentration, rebalancing |
 | [`/thesis-tracker`](skills/thesis-tracker.md) | Investment thesis tracker | Post-buy discipline system: continuously track whether your thesis has been falsified |
 | [`/thesis-drift`](skills/thesis-drift.md) | Investment thesis drift detection | Compare two theses/reports — separate factual, valuation, and wording changes |
@@ -350,6 +351,7 @@ Invoke directly in Claude Code:
 /investment-checklist Moutai, NVIDIA, Apple
 
 # Portfolio Management
+/income-investment Verizon mode=existing role=core-income quantity=100 cost_basis=39.50 tax_residence=France horizon=5y
 /portfolio-review Tencent 30%, Meituan 20%, Moutai 20%, Cash 30%
 /thesis-tracker Pinduoduo
 /thesis-drift Pinduoduo reports/PDD-thesis-2025Q4.md reports/PDD-thesis-2026Q1.md
@@ -738,4 +740,9 @@ MIT License
 
 If this project has been helpful to you, please give it a Star!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=xbtlin/ai-berkshire&type=Date)](https://star-history.com/#xbtlin/ai-berkshire&Date)
+<a href="https://github.com/xbtlin/ai-berkshire/stargazers">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/star-history-dark.svg">
+    <img alt="Star History Chart" src="assets/star-history.svg">
+  </picture>
+</a>
