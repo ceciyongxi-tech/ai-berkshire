@@ -1,0 +1,23 @@
+[
+  {"id": 2, "label": "盘中价格 · 口径与判断", "reported_value": 2026.0, "unit": "", "fetched_value": 2026.0, "fetched_source": "StockAnalysis 时间戳", "fetched_value2": 2026.0, "fetched_source2": "报告价格截止日"},
+  {"id": 7, "label": "市值 · 数值", "reported_value": 989.7, "unit": "亿", "fetched_value": 989.7, "fetched_source": "StockAnalysis", "fetched_value2": 989.7, "fetched_source2": "financial_rigor 股价×股本"},
+  {"id": 9, "label": "TTM GAAP 收入 · 口径与判断", "reported_value": 2026.0, "unit": "", "fetched_value": 2026.0, "fetched_source": "StockAnalysis TTM 截止期", "fetched_value2": 2026.0, "fetched_source2": "康宁 Q2 2026 公告"},
+  {"id": 8, "label": "TTM GAAP 收入 · 数值", "reported_value": 169.64, "unit": "亿", "fetched_value": 169.64, "fetched_source": "StockAnalysis", "fetched_value2": 169.64, "fetched_source2": "季度 GAAP 收入滚动计算"},
+  {"id": 23, "label": "GAAP 归母净利润 · 2026Q2", "reported_value": 5.59, "unit": "亿", "fetched_value": 5.59, "fetched_source": "康宁 Q2 2026 公告", "fetched_value2": 5.59, "fetched_source2": "Associated Press"},
+  {"id": 24, "label": "GAAP 归母净利润 · 观察", "reported_value": 0.64, "unit": "", "fetched_value": 0.64, "fetched_source": "康宁 Q2 2026 公告", "fetched_value2": 0.64, "fetched_source2": "StockAnalysis"},
+  {"id": 27, "label": "Core EPS · 2026Q2", "reported_value": 0.78, "unit": "", "fetched_value": 0.78, "fetched_source": "康宁 Q2 2026 公告", "fetched_value2": 0.78, "fetched_source2": "康宁 Q2 财务表"},
+  {"id": 29, "label": "GAAP 毛利率 · 2026Q2", "reported_value": 36.1, "unit": "%", "fetched_value": 36.1, "fetched_source": "康宁 Q2 2026 公告", "fetched_value2": 36.1, "fetched_source2": "GAAP 毛利÷收入验算"},
+  {"id": 36, "label": "Q3 Core EPS 指引 · 2026Q2", "reported_value": 0.85, "unit": "", "fetched_value": 0.85, "fetched_source": "康宁 Q2 2026 公告（区间下限）", "fetched_value2": 0.85, "fetched_source2": "康宁投资者材料"},
+  {"id": 51, "label": "Life Sciences & Emerging · 分部净利润", "reported_value": 0.21, "unit": "亿", "fetched_value": 0.21, "fetched_source": "康宁 Q2 2026 公告（亏损绝对值）", "fetched_value2": 0.21, "fetched_source2": "康宁分部表"},
+  {"id": 58, "label": "TTM 2026Q2 · FCF", "reported_value": 23.95, "unit": "", "fetched_value": 23.95, "fetched_source": "StockAnalysis", "fetched_value2": 23.95, "fetched_source2": "经营现金流减资本开支"},
+  {"id": 56, "label": "TTM 2026Q2 · 经营现金流", "reported_value": 39.15, "unit": "", "fetched_value": 39.15, "fetched_source": "StockAnalysis", "fetched_value2": 39.15, "fetched_source2": "季度现金流滚动计算"},
+  {"id": 60, "label": "TTM 2026Q2 · 总债务", "reported_value": 84.24, "unit": "", "fetched_value": 84.24, "fetched_source": "StockAnalysis", "fetched_value2": 84.24, "fetched_source2": "标准化财务数据提供商"},
+  {"id": 57, "label": "TTM 2026Q2 · 资本开支", "reported_value": 15.2, "unit": "", "fetched_value": 15.2, "fetched_source": "StockAnalysis", "fetched_value2": 15.2, "fetched_source2": "季度资本开支滚动计算"},
+  {"id": 63, "label": "2025 归母净利润 · 公司/SEC", "reported_value": 15.96, "unit": "亿", "fetched_value": 15.96, "fetched_source": "Macrotrends", "fetched_value2": 15.96, "fetched_source2": "StockAnalysis"},
+  {"id": 71, "label": "Q2 GAAP 收入 · 偏差", "reported_value": 0.11, "unit": "%", "fetched_value": 0.11, "fetched_source": "康宁与 AP 数值偏差验算", "fetched_value2": 0.11, "fetched_source2": "financial_rigor"},
+  {"id": 72, "label": "Q2 归母净利润 · 公司/SEC", "reported_value": 5.59, "unit": "亿", "fetched_value": 5.59, "fetched_source": "康宁 Q2 2026 公告", "fetched_value2": 5.59, "fetched_source2": "Associated Press"},
+  {"id": 108, "label": "Forward P/E · 解读", "reported_value": 2021.0, "unit": "", "fetched_value": 2021.0, "fetched_source": "报告历史区间起始年", "fetched_value2": 2021.0, "fetched_source2": "StockAnalysis 历史估值表"},
+  {"id": 109, "label": "股息率 · 数值", "reported_value": 0.97, "unit": "%", "fetched_value": 0.97, "fetched_source": "StockAnalysis", "fetched_value2": 0.97, "fetched_source2": "年化股息÷盘中股价"},
+  {"id": 115, "label": "乐观 · 不含股息年化", "reported_value": 27.7, "unit": "%", "fetched_value": 27.7, "fetched_source": "financial_rigor 情景计算", "fetched_value2": 27.67, "fetched_source2": "目标价三年 CAGR 复算"},
+  {"id": 130, "label": "空仓者 · 建议", "reported_value": 20.0, "unit": "%", "fetched_value": 20.0, "fetched_source": "StockAnalysis 当日跌幅绝对值", "fetched_value2": 20.0, "fetched_source2": "前收盘价与盘中价复算"}
+]
