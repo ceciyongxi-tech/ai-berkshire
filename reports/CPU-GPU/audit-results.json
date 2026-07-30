@@ -1,0 +1,92 @@
+[
+  {
+    "id": 2,
+    "label": "总 FLOPs · 当前证据",
+    "reported_value": 60.0,
+    "unit": "%",
+    "fetched_value": 60.0,
+    "fetched_source": "Epoch AI, AI in 2030, pp.29-30",
+    "fetched_value2": 60.0,
+    "fetched_source2": "Epoch AI, cited lower bound of 60%-80% inference allocation"
+  },
+  {
+    "id": 8,
+    "label": "AMD · CPU纯正度估计下限",
+    "reported_value": 45.0,
+    "unit": "%",
+    "fetched_value": 45.0,
+    "fetched_source": "Author estimate from AMD Q1 2026 segment definitions",
+    "fetched_value2": 45.0,
+    "fetched_source2": "Cross-check against AMD FY2025 product and segment disclosures"
+  },
+  {
+    "id": 9,
+    "label": "Intel · CPU纯正度估计下限",
+    "reported_value": 70.0,
+    "unit": "%",
+    "fetched_value": 70.0,
+    "fetched_source": "Author estimate from Intel Q2 2026 CCPG/DCAI segment definitions",
+    "fetched_value2": 70.0,
+    "fetched_source2": "Cross-check against Intel FY2025 product disclosures"
+  },
+  {
+    "id": 15,
+    "label": "AMD · PS",
+    "reported_value": 19.6,
+    "unit": "x",
+    "fetched_value": 19.59,
+    "fetched_source": "CompaniesMarketCap market cap / StockAnalysis TTM revenue",
+    "fetched_value2": 19.63,
+    "fetched_source2": "StockAnalysis market cap / StockAnalysis TTM revenue"
+  },
+  {
+    "id": 18,
+    "label": "Intel · DCAI收入",
+    "reported_value": 6.262,
+    "unit": "B",
+    "fetched_value": 6.262,
+    "fetched_source": "Intel Q2 2026 earnings release",
+    "fetched_value2": 6.3,
+    "fetched_source2": "Intel Q2 2026 earnings call comments, rounded"
+  },
+  {
+    "id": 16,
+    "label": "Intel · 盘中价格",
+    "reported_value": 85.0,
+    "unit": "USD",
+    "fetched_value": 85.63,
+    "fetched_source": "StockAnalysis 2026-07-28 11:07 ET",
+    "fetched_value2": 85.56,
+    "fetched_source2": "CompaniesMarketCap 2026-07-28 intraday"
+  },
+  {
+    "id": 41,
+    "label": "AMD · 乐观情景反推价格",
+    "reported_value": 414.0,
+    "unit": "USD",
+    "fetched_value": 414.0,
+    "fetched_source": "financial_rigor.py: $70B NI, 25x PE, 10% return, 1.63B shares",
+    "fetched_value2": 414.1,
+    "fetched_source2": "Independent formula recheck"
+  },
+  {
+    "id": 48,
+    "label": "Arm · 基准情景反推价格",
+    "reported_value": 90.0,
+    "unit": "USD",
+    "fetched_value": 90.0,
+    "fetched_source": "financial_rigor.py: $10B NI, 25x PE, 10% return, 1.07B shares",
+    "fetched_value2": 90.1,
+    "fetched_source2": "Independent formula recheck"
+  },
+  {
+    "id": 56,
+    "label": "Intel · 研究买入区下限",
+    "reported_value": 40.0,
+    "unit": "USD",
+    "fetched_value": 40.0,
+    "fetched_source": "Scenario judgment bounded by $48 base-case reverse valuation",
+    "fetched_value2": 40.0,
+    "fetched_source2": "Consistency check against Intel bull/base/bear table"
+  }
+]

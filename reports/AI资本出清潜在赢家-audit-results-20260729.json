@@ -1,0 +1,81 @@
+{
+  "report": "reports/AI资本出清潜在赢家-funnel-20260729.md",
+  "audit_date": "2026-07-29",
+  "sample_ratio": 0.15,
+  "seed": 42,
+  "verdict": "PASS",
+  "pass_count": 4,
+  "warn_count": 2,
+  "fail_count": 0,
+  "total": 6,
+  "results": [
+    {
+      "id": 2,
+      "label": "ROP · 现金流/资本强度",
+      "reported_value": 2.466,
+      "unit": "B",
+      "fetched_value": 2.466,
+      "fetched_source": "Roper FY2025 earnings release",
+      "fetched_value2": 2.466,
+      "fetched_source2": "Roper 2025 annual report reconciliation",
+      "status": "PASS"
+    },
+    {
+      "id": 8,
+      "label": "APO · 当前估值快照",
+      "reported_value": 124.69,
+      "unit": "USD",
+      "fetched_value": 124.69,
+      "fetched_source": "StockAnalysis / S&P Global",
+      "fetched_value2": 124.69,
+      "fetched_source2": "Investing.com historical data",
+      "status": "PASS"
+    },
+    {
+      "id": 9,
+      "label": "CSCO · 当前估值快照",
+      "reported_value": 115.58,
+      "unit": "USD",
+      "fetched_value": 115.58,
+      "fetched_source": "StockAnalysis / S&P Global",
+      "fetched_value2": 115.58,
+      "fetched_source2": "Investing.com historical data",
+      "status": "PASS"
+    },
+    {
+      "id": 16,
+      "label": "XSW · 资产规模",
+      "reported_value": 0.4,
+      "unit": "B",
+      "fetched_value": 0.40181,
+      "fetched_source": "State Street XSW product page (2026-07-23)",
+      "fetched_value2": 0.41122,
+      "fetched_source2": "ETF Central",
+      "status": "WARN",
+      "note": "ETF 资产规模随价格和每日申赎变动；报告使用约数。"
+    },
+    {
+      "id": 15,
+      "label": "XSW · 持仓数",
+      "reported_value": 132,
+      "unit": "holdings",
+      "fetched_value": 132,
+      "fetched_source": "State Street XSW product page",
+      "fetched_value2": 134,
+      "fetched_source2": "Schwab ETF holdings (2026-07-27)",
+      "status": "WARN",
+      "note": "不同抓取日及现金/待交收项目口径造成差异。"
+    },
+    {
+      "id": 18,
+      "label": "JAAA · 费用率",
+      "reported_value": 0.2,
+      "unit": "%",
+      "fetched_value": 0.2,
+      "fetched_source": "Janus Henderson JAAA product page",
+      "fetched_value2": 0.2,
+      "fetched_source2": "StockAnalysis JAAA overview",
+      "status": "PASS"
+    }
+  ]
+}

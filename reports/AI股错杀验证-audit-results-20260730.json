@@ -1,0 +1,25 @@
+{
+  "report": "reports/AI股错杀验证-funnel-20260730.md",
+  "audit_date": "2026-07-30",
+  "seed": 42,
+  "sample_ratio": 0.15,
+  "extracted_points": 105,
+  "sampled_points": 16,
+  "verdict": "PASS",
+  "pass_count": 15,
+  "warn_count": 1,
+  "fail_count": 0,
+  "warning": {
+    "label": "ASML TTM PE",
+    "reported_value": 49.1,
+    "source_1": {
+      "name": "StockAnalysis / S&P Global",
+      "value": 49.07
+    },
+    "source_2": {
+      "name": "FinanceCharts, 2026-07-27",
+      "value": 55.07
+    },
+    "treatment": "保留口径差异警告；报告不以较低的 forward PE 证明 ASML 便宜，并按高估值口径处理。"
+  }
+}

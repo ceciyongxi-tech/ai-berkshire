@@ -1,0 +1,133 @@
+{
+  "report": "reports/Roper-Technologies/Roper-Technologies研究报告-20260729.md",
+  "audit_date": "2026-07-29",
+  "sample_ratio": 0.15,
+  "seed": 42,
+  "extracted_points": 86,
+  "sampled_points": 13,
+  "verdict": {
+    "status": "PASS",
+    "pass_count": 13,
+    "warn_count": 0,
+    "fail_count": 0
+  },
+  "results": [
+    {
+      "id": 4,
+      "label": "2026 Q2 adjusted EPS",
+      "reported_value": 5.38,
+      "fetched_value": 5.38,
+      "fetched_source": "Roper Q2 2026 earnings release",
+      "fetched_value2": 5.38,
+      "fetched_source2": "Roper Q2 2026 investor presentation"
+    },
+    {
+      "id": 5,
+      "label": "2026 Q2 adjusted EPS growth",
+      "reported_value": 10.0,
+      "fetched_value": 10.0,
+      "fetched_source": "Roper Q2 2026 earnings release",
+      "fetched_value2": 10.0,
+      "fetched_source2": "Roper Q2 2026 investor presentation"
+    },
+    {
+      "id": 12,
+      "label": "FY2026 adjusted EPS guidance low end",
+      "reported_value": 22.15,
+      "fetched_value": 22.15,
+      "fetched_source": "Roper Q2 2026 earnings release",
+      "fetched_value2": 22.15,
+      "fetched_source2": "Roper Q2 2026 investor presentation"
+    },
+    {
+      "id": 14,
+      "label": "Q2 2026 cash",
+      "reported_value": 364.9,
+      "fetched_value": 364.9,
+      "fetched_source": "Roper Q2 2026 earnings release",
+      "fetched_value2": 364.9,
+      "fetched_source2": "Roper Q2 2026 Form 10-Q"
+    },
+    {
+      "id": 15,
+      "label": "Q2 2026 total debt",
+      "reported_value": 11.319,
+      "fetched_value": 11.3194,
+      "fetched_source": "Roper Q2 2026 earnings release",
+      "fetched_value2": 11.319,
+      "fetched_source2": "StockAnalysis balance sheet"
+    },
+    {
+      "id": 18,
+      "label": "Net debt to TTM adjusted EBITDA",
+      "reported_value": 3.38,
+      "fetched_value": 3.381,
+      "fetched_source": "financial_rigor exact calculation",
+      "fetched_value2": 3.4,
+      "fetched_source2": "Roper Q2 2026 investor presentation"
+    },
+    {
+      "id": 29,
+      "label": "Network Software revenue share",
+      "reported_value": 20.26,
+      "fetched_value": 20.2569,
+      "fetched_source": "Roper 2025 Form 10-K segment revenue calculation",
+      "fetched_value2": 20.26,
+      "fetched_source2": "financial_rigor exact percentage calculation"
+    },
+    {
+      "id": 32,
+      "label": "Technology Enabled Products revenue",
+      "reported_value": 1.819,
+      "fetched_value": 1.8187,
+      "fetched_source": "Roper 2025 Form 10-K",
+      "fetched_value2": 1.819,
+      "fetched_source2": "StockAnalysis financials"
+    },
+    {
+      "id": 36,
+      "label": "FY2025 revenue",
+      "reported_value": 7902.5,
+      "fetched_value": 7902.5,
+      "fetched_source": "Roper 2025 Form 10-K",
+      "fetched_value2": 7903.0,
+      "fetched_source2": "StockAnalysis financials"
+    },
+    {
+      "id": 55,
+      "label": "Market capitalization",
+      "reported_value": 38.66,
+      "fetched_value": 38.66,
+      "fetched_source": "StockAnalysis quote page",
+      "fetched_value2": 38.661988,
+      "fetched_source2": "financial_rigor price-times-shares calculation"
+    },
+    {
+      "id": 70,
+      "label": "Bull-case fifth-year EPS",
+      "reported_value": 39.17,
+      "fetched_value": 39.17,
+      "fetched_source": "financial_rigor three-scenario output",
+      "fetched_value2": 39.1704,
+      "fetched_source2": "independent compound-growth calculation"
+    },
+    {
+      "id": 76,
+      "label": "Base-case exit P/E assumption",
+      "reported_value": 19.0,
+      "fetched_value": 19.0,
+      "fetched_source": "report base-case model assumption",
+      "fetched_value2": 19.0,
+      "fetched_source2": "financial_rigor scenario input"
+    },
+    {
+      "id": 82,
+      "label": "Bear-case fifth-year target price",
+      "reported_value": 360.7,
+      "fetched_value": 360.7,
+      "fetched_source": "financial_rigor three-scenario output",
+      "fetched_value2": 360.7,
+      "fetched_source2": "independent EPS-times-exit-multiple calculation"
+    }
+  ]
+}
