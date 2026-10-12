@@ -1,0 +1,172 @@
+[
+  {
+    "id": 4,
+    "label": "广告收入 · Q2 2026",
+    "reported_value": 59.363,
+    "unit": "bn USD",
+    "fetched_value": 59.363,
+    "fetched_source": "Meta Q2 2026 IR",
+    "fetched_value2": 59.363,
+    "fetched_source2": "StockAnalysis quarterly segment data"
+  },
+  {
+    "id": 5,
+    "label": "广告收入 · 判断",
+    "reported_value": 97.63,
+    "unit": "%",
+    "fetched_value": 97.63,
+    "fetched_source": "Meta Q2 2026 IR values",
+    "fetched_value2": 97.63,
+    "fetched_source2": "financial_rigor exact calculation"
+  },
+  {
+    "id": 12,
+    "label": "公司口径 FCF · Q2 2026",
+    "reported_value": 0.784,
+    "unit": "bn USD",
+    "fetched_value": 0.784,
+    "fetched_source": "Meta Q2 2026 IR",
+    "fetched_value2": 0.784,
+    "fetched_source2": "Associated Press Q2 report"
+  },
+  {
+    "id": 15,
+    "label": "Family of Apps · 营业利润/亏损",
+    "reported_value": 23.394,
+    "unit": "bn USD",
+    "fetched_value": 23.394,
+    "fetched_source": "Meta Q2 2026 segment table",
+    "fetched_value2": 23.394,
+    "fetched_source2": "Meta Q2 earnings presentation"
+  },
+  {
+    "id": 14,
+    "label": "Family of Apps · Q2 收入",
+    "reported_value": 60.37,
+    "unit": "bn USD",
+    "fetched_value": 60.37,
+    "fetched_source": "Meta Q2 2026 segment table",
+    "fetched_value2": 60.37,
+    "fetched_source2": "StockAnalysis quarterly segment data"
+  },
+  {
+    "id": 18,
+    "label": "Reality Labs · 营业利润/亏损",
+    "reported_value": 4.619,
+    "unit": "bn USD loss",
+    "fetched_value": 4.619,
+    "fetched_source": "Meta Q2 2026 segment table",
+    "fetched_value2": 4.619,
+    "fetched_source2": "Meta Q2 earnings presentation"
+  },
+  {
+    "id": 28,
+    "label": "广告 · 占比/趋势",
+    "reported_value": 97.67,
+    "unit": "%",
+    "fetched_value": 97.67,
+    "fetched_source": "Meta 2026 H1 segment values",
+    "fetched_value2": 97.67,
+    "fetched_source2": "financial_rigor exact calculation"
+  },
+  {
+    "id": 29,
+    "label": "FoA 其他收入 · 2025",
+    "reported_value": 2.584,
+    "unit": "bn USD",
+    "fetched_value": 2.584,
+    "fetched_source": "Meta 2025 10-K",
+    "fetched_value2": 2.584,
+    "fetched_source2": "StockAnalysis segment data"
+  },
+  {
+    "id": 30,
+    "label": "FoA 其他收入 · 2026 H1",
+    "reported_value": 1.891,
+    "unit": "bn USD",
+    "fetched_value": 1.891,
+    "fetched_source": "Meta Q2 2026 H1 segment table",
+    "fetched_value2": 1.891,
+    "fetched_source2": "StockAnalysis quarterly segment data"
+  },
+  {
+    "id": 32,
+    "label": "Reality Labs · 2025",
+    "reported_value": 2.207,
+    "unit": "bn USD",
+    "fetched_value": 2.207,
+    "fetched_source": "Meta 2025 10-K",
+    "fetched_value2": 2.207,
+    "fetched_source2": "StockAnalysis segment data"
+  },
+  {
+    "id": 36,
+    "label": "长期债务 · 2025-12-31",
+    "reported_value": 58.744,
+    "unit": "bn USD",
+    "fetched_value": 58.744,
+    "fetched_source": "Meta 2025 10-K",
+    "fetched_value2": 58.744,
+    "fetched_source2": "StockAnalysis balance sheet"
+  },
+  {
+    "id": 55,
+    "label": "2026 Q2 现金及证券 · 公司/SEC",
+    "reported_value": 90.26,
+    "unit": "bn USD",
+    "fetched_value": 90.26,
+    "fetched_source": "Meta Q2 2026 IR",
+    "fetched_value2": 90.26,
+    "fetched_source2": "StockAnalysis balance sheet"
+  },
+  {
+    "id": 70,
+    "label": "2025–2026 · 评分",
+    "reported_value": 2.5,
+    "unit": "out of 5",
+    "fetched_value": 2.5,
+    "fetched_source": "Report research judgment",
+    "fetched_value2": 2.5,
+    "fetched_source2": "Management and capital-allocation rubric"
+  },
+  {
+    "id": 76,
+    "label": "SBC · 评价",
+    "reported_value": 25.136,
+    "unit": "bn USD",
+    "fetched_value": 25.136,
+    "fetched_source": "Meta IR TTM derivation",
+    "fetched_value2": 25.136,
+    "fetched_source2": "StockAnalysis cash-flow statement"
+  },
+  {
+    "id": 82,
+    "label": "正常化 EPS 锚 · 数值",
+    "reported_value": 30.0,
+    "unit": "USD per share",
+    "fetched_value": 30.0,
+    "fetched_source": "Report normalized-EPS assumption",
+    "fetched_value2": 30.0,
+    "fetched_source2": "Rounded tax-adjusted EPS model input"
+  },
+  {
+    "id": 87,
+    "label": "TTM P/S · 数值",
+    "reported_value": 5.89,
+    "unit": "times",
+    "fetched_value": 5.89,
+    "fetched_source": "financial_rigor valuation verification",
+    "fetched_value2": 5.89,
+    "fetched_source2": "Snapshot market-cap divided by TTM revenue"
+  },
+  {
+    "id": 95,
+    "label": "中性 · 期末 PE",
+    "reported_value": 20.0,
+    "unit": "times",
+    "fetched_value": 20.0,
+    "fetched_source": "Report base-case assumption",
+    "fetched_value2": 20.0,
+    "fetched_source2": "financial_rigor scenario model input"
+  }
+]
